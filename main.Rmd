@@ -1,10 +1,17 @@
 ---
 title: "Woah cool a proper git paper!"
 author: "Ryan, Brown, & Platt"
-date: `r format(Sys.Date() + lubridate::years(20),"%A, %B %d, %Y")`
+date: "`r format(Sys.Date() + lubridate::years(20),'%A, %B %d, %Y')`"
+
+# Using bookdown makes some things easier, like the \@ref() calls to figures and tables.
 output: bookdown::pdf_document2
+
+# Show table of contents?
 toc: yes
+
 bibliography: references.bib
+
+# If we don't use AAG, we'll need to change this
 csl: aag.csl
 ---
 
@@ -26,7 +33,14 @@ poiss <- rpois(100, 2)
 ```{r child = "scatter.Rmd"}
 ```
 
+You can call data from the main .Rmd from child files! Neat. Let's use this for mapping etc. -- for testing purposes we should define data in each section .Rmd to make things easier, but for the paper itself it'd be noice to only do that once in main.Rmd
+
+
 See figure \@ref(fig:hist) and figure \@ref(fig:scatter) for more details; also read @andersen2021.
+
+You can use `\@ref(fig:name-of-code-chunk)` to get the figure/table number, rather than manually entering "figure 2, 3, etc." It just outputs the number of the figure.
+
+You can link to Zotero and type `@andersen2021` etc. to enter a Zotero-compatible in-text citation.
 
 \pagebreak
 
