@@ -1,0 +1,8 @@
+# Scatter Plot
+```{r scatter, echo = F, fig.cap = "Scatter Plot"}
+pois2 <- rpois(100, 2.1)
+
+plot(x = poiss, y = pois2)
+
+```
+

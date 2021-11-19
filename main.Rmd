@@ -1,0 +1,33 @@
+---
+title: "Woah cool a proper git paper!"
+author: "Ryan, Brown, & Platt"
+date: `r format(Sys.Date() + lubridate::years(20),"%A, %B %d, %Y")`
+output: bookdown::pdf_document2
+toc: yes
+bibliography: references.bib
+csl: aag.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+```
+
+```{r rpois, echo = F}
+poiss <- rpois(100, 2)
+```
+
+```{r child = "intro.Rmd"}
+```
+
+\pagebreak
+
+```{r child = "scatter.Rmd"}
+```
+
+See figure \@ref(fig:hist) and figure \@ref(fig:scatter) for more details; also read @andersen2021.
+
+\pagebreak
+
+# References
