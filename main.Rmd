@@ -1,7 +1,7 @@
 ---
 title: "Woah cool a proper git paper!"
 author: "Ryan, Brown, & Platt"
-date: `r format(Sys.Date() + lubridate::years(20),"%A, %B %d, %Y")`
+date: "`r format(Sys.Date() + lubridate::years(20),'%A, %B %d, %Y')`"
 output: bookdown::pdf_document2
 toc: yes
 bibliography: references.bib
