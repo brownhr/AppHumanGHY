@@ -1,6 +1,0 @@
-# Introduction!
-
-```{r hist, fig.cap = "histogram", echo = F}
-hist(poiss)
-```
-
