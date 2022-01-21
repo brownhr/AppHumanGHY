@@ -29,7 +29,7 @@ abstract: |
 
 journal: "An awesome journal"
 date: "`r Sys.Date()`"
-bibliography: mybibfile.bib
+bibliography: bibliography.bib
 #linenumbers: true
 #numbersections: true
 csl: aag.csl
