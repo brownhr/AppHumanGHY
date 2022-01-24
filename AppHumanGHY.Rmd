@@ -32,7 +32,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 #linenumbers: true
 #numbersections: true
-csl: aag.csl
+csl: csl/aag.csl
 output: rticles::elsevier_article
 ---
 
