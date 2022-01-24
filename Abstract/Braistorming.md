@@ -3,3 +3,4 @@ Jounral article ideas
 2.
 3
 
+lLes use health data from CDC PLaces
