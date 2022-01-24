@@ -1,6 +1,7 @@
-Jounral article ideas
+**Journal article ideas**
 1.
 2.
-3
+3.
 
-lLes use health data from CDC PLaces
+`Lets use CDC PLACES data`
+
