@@ -323,3 +323,7 @@ TSWLatexianTemp*
 # Makeindex log files
 *.lpz
 .Rproj.user
+
+# Large files in data/
+
+data/*.csv
