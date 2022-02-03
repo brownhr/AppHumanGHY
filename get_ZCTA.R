@@ -56,6 +56,32 @@ st_write(
   dsn = "data/shp/wnc_counties.shp"
 )
 
+# Get ZCTA for all of NC
+
+nc_zcta <- tigris::zctas(
+  state = "NC",
+  year = '2010',
+  cb = F
+)
+
+# Intersect ZCTA with sf
+
+wnc_zcta_list <- st_intersects(
+  x = nc_zcta,
+  y = wnc_counties
+)
 
 
-  # Intersect ZCTA with sf
+wnc_zcta_all <- nc_zcta[(lengths(wnc_zcta_list) > 0), ]
+
+wnc_zcta <- wnc_zcta_all %>% 
+  dplyr::select(
+    GEOID10,
+    ZCTA5CE10,
+    geometry
+  )
+
+st_write(
+  obj = wnc_zcta,
+  dsn = "data/shp/wnc_zcta.shp"
+)
