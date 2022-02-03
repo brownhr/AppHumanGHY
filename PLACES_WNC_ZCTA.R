@@ -45,9 +45,18 @@ places_wide <-
 # Save this as a shapefile
 
 
+places_rename <- places_wide %>% 
+  dplyr::rename(
+    GEOID = GEOID10,
+    ZCTA = ZCTA5CE10,
+    TOTPOP = TotalPopulation,
+    COLON = COLON_SCREEN
+  )
+
 st_write(
-  obj = places_wide,
+  obj = places_rename,
   dsn = "data/shp/places_wnc_zcta.shp",
+  append = F
 )
 
 
