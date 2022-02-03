@@ -1,2 +1,5 @@
 library(knitr)
 library(rmarkdown)
+library(dplyr)
+library(readr)
+library(sf)
