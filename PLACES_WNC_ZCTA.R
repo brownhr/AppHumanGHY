@@ -31,14 +31,22 @@ places_wnc_zcta <- left_join(wnc_zcta, places_zcta_all,
 
 # Combining the columns 
 
+places_wide <- 
+  places_wnc_zcta %>% pivot_wider(
+    id_cols = -c("Category", "Year"),
+    names_from = "MeasureId",
+    values_from = "Data_Value"
+  ) %>% 
+  dplyr::select(
+    -"NA"
+  )
+
 
 # Save this as a shapefile
 
 
-
-
 st_write(
-  obj = places_wnc_zcta,
+  obj = places_wide,
   dsn = "data/shp/places_wnc_zcta.shp",
 )
 
