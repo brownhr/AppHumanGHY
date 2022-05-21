@@ -22,3 +22,5 @@ if (!dir.exists(gs_dir)) {
   )
   file_delete(path(gs_dir, gs_name))
 }
+
+# gs_shp <- read_sf(path(gs_dir, "GS_Shapefile.shp"))
