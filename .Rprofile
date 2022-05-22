@@ -16,10 +16,12 @@ crs <- "EPSG:32119"
 # by default, but I wanted an option to change this if I wanted (might put this
 # function in excess ;) )
 
+# There's actually a bug in either sf or GDAL where the driver for KML messes up the file names, so I've wasted another hour of my evening on this :)
+
 write_sf2 <-
   function(sf,
            dir = "data",
-           drivers = c("kml", "shp"),
+           drivers = c("gpkg"),
            name = deparse(substitute(sf))) {
     dir <- as_fs_path(dir)
     filename <- name
@@ -32,7 +34,9 @@ write_sf2 <-
           dir_create(sf_dir)
         }
         file <- path_ext_set(path(sf_dir, filename), x)
-        write_sf(sf, file)
+      
+          st_write(sf, file, append = FALSE)
+        
       }
     )
   }
@@ -42,16 +46,19 @@ write_sf2 <-
 # CRS, but you can never be too sure on this and I don't want to mess up our
 # analysis because of a simple mistake like this.
 
-wnc_zcta <- read_sf("data/kml/wnc_zcta.kml") %>%
+wnc_zcta <- st_read("data/gpkg/wnc_zcta.gpkg") %>%
   st_transform(crs)
 
-wnc_extent <- read_sf("data/kml/wnc_extent.kml") %>%
+wnc_extent <- st_read("data/gpkg/wnc_extent.gpkg") %>%
   st_transform(crs)
 
 # I had to use .shp for this one because of some invalid characters in the
 # dataset :(
-amenities_wnc <- read_sf("data/shp/amenities_wnc.shp") %>%
+amenities_wnc <- st_read("data/gpkg/amenities_wnc.gpkg") %>%
   st_transform(crs)
+
+amenities_by_zcta <- st_read("data/gpkg/amenities_by_zcta.gpkg")
+
 
 # padus_wnc <- read_sf("data/shp/padus_wnc.shp") %>%
 #   st_transform(crs)

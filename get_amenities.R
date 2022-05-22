@@ -34,4 +34,4 @@ wnc_amenities_2 <- wnc_amenities %>%
   st_transform(crs) %>% 
   st_filter(wnc_zcta)
 
-write_sf(wnc_amenities_2, "data/shp/amenities_wnc.shp")
+write_sf2(wnc_amenities_2, name = "amenities_wnc")

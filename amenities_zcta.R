@@ -1,17 +1,11 @@
-library(tidyverse)
-library(sf)
-library(tmap)
-
-crs <- st_crs("EPSG:32119")
-
-wnc_zcta <- read_sf("data/shp/places_wnc_zcta.shp") %>% 
-  st_transform(crs = crs)
-wnc_amenities <- read_sf("data/shp/wnc_amenities.shp") %>% 
-  st_transform(crs = crs) %>% 
+wnc_amenities <- amenities_wnc %>% 
   mutate(amenity = amenity %>% str_replace_all("_", " ") %>% str_to_title() %>% as.factor())
 
+  
+# dplyr summaries *really* don't like geometry, so I just took it out to be
+# re-joined later.
 zcta_geom <- wnc_zcta %>% 
-  select(ZCTA, geometry)
+  select(ZCTA)
 
 
 wnc_amenities_join <- wnc_amenities %>% 
@@ -32,6 +26,7 @@ wnc_zcta_amenities <- zcta_geom %>%
   right_join(wnc_zcta_amenities)
 
 
+write_sf2(wnc_zcta_amenities, name = "amenities_by_zcta")
 
 # top_amens <- wnc_amenities %>% 
 #   st_drop_geometry() %>% 

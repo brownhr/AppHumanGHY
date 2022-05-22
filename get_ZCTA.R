@@ -50,7 +50,6 @@ wnc_counties <- nc_counties %>%
 
 # Save the results to a file so we can use this later
 
-write_sf2(wnc_counties)
 
 # Get ZCTA for all of NC
 
@@ -80,7 +79,9 @@ wnc_zcta <- wnc_zcta_all %>%
     GEOID10,
     ZCTA5CE10,
     geometry
-  )
+  ) %>% 
+  rename(
+    ZCTA = ZCTA5CE10)
 
-
+write_sf2(wnc_counties)
 write_sf2(wnc_zcta)
