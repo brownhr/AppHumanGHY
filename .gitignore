@@ -328,4 +328,5 @@ TSWLatexianTemp*
 
 data/*.csv
 data/D795EF00
-data/shp/gs
+data/gs
+
