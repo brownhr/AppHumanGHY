@@ -15,13 +15,12 @@ get_amenities <- function(bbox) {
     unique_osmdata()
 }
 
-get_centroids <- function(shp) {
-  centroids <- shp[4:7] %>%
+get_centroids <- function(list) {
+  centroids <- list[4:7] %>%
     map(~ mutate(.x,
       geometry = st_centroid(st_make_valid(geometry))
     )) %>%
-    bind_rows() %>%
-    select(osm_id, name, amenity, geometry)
+    bind_rows()
   return(centroids)
 }
 
@@ -30,9 +29,9 @@ wnc_amenities <- wnc_bbox %>%
 
 
 wnc_amenities_2 <- wnc_amenities %>% 
-  get_centroids() %>%
-  st_transform(crs) %>% 
+  get_centroids() %>% 
   select(osm_id, name, amenity, geometry) %>%
+  st_transform(crs) %>% 
   st_filter(wnc_zcta)
 
-write_sf2(wnc_amenities_2, name = "amenities_wnc")
+write_sf(wnc_amenities_2, "data/shp/amenities_wnc.shp")
