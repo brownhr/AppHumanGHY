@@ -57,8 +57,8 @@ wnc_extent <- st_read("data/gpkg/wnc_extent.gpkg") %>%
 amenities_wnc <- st_read("data/gpkg/amenities_wnc.gpkg") %>%
   st_transform(crs)
 
-amenities_by_zcta <- st_read("data/gpkg/amenities_by_zcta.gpkg")
+amenities_by_zcta <- st_read("data/gpkg/amenities_by_zcta.gpkg") %>% 
+  st_transform(crs)
 
-
-# padus_wnc <- read_sf("data/shp/padus_wnc.shp") %>%
-#   st_transform(crs)
+padus_wnc <- st_read("data/gpkg/padus_wnc.gpkg") %>%
+  st_transform(crs)
