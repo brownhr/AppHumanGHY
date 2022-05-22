@@ -19,9 +19,10 @@ crs <- "EPSG:32119"
 write_sf2 <-
   function(sf,
            dir = "data",
-           drivers = c("kml", "shp")) {
+           drivers = c("kml", "shp"),
+           name = deparse(substitute(sf))) {
     dir <- as_fs_path(dir)
-    filename <- deparse(substitute(sf))
+    filename <- name
 
     files <- map(
       drivers,
