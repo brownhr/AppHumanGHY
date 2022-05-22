@@ -48,7 +48,9 @@ wnc_zcta <- read_sf("data/kml/wnc_zcta.kml") %>%
 wnc_extent <- read_sf("data/kml/wnc_extent.kml") %>%
   st_transform(crs)
 
-amenities_wnc <- read_sf("data/kml/amenities_wnc.kml") %>%
+# I had to use .shp for this one because of some invalid characters in the
+# dataset :(
+amenities_wnc <- read_sf("data/shp/amenities_wnc.shp") %>%
   st_transform(crs)
 
 # padus_wnc <- read_sf("data/shp/padus_wnc.shp") %>%
