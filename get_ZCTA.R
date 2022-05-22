@@ -1,6 +1,4 @@
 library(tigris)
-library(sf)
-library(dplyr)
 
 # Get ZCTA for Western NC
 
@@ -34,7 +32,8 @@ wnc_counties_list <- c(
 nc_counties <- tigris::counties(
   state = "NC",
   cb = T
-)
+) %>% 
+  st_transform(crs)
 
 # Find counties in WNC
 
@@ -51,11 +50,7 @@ wnc_counties <- nc_counties %>%
 
 # Save the results to a file so we can use this later
 
-st_write(
-  obj = wnc_counties,
-  dsn = "data/shp/wnc_counties.shp",
-  append = FALSE
-)
+write_sf2(wnc_counties)
 
 # Get ZCTA for all of NC
 
@@ -63,7 +58,8 @@ nc_zcta <- tigris::zctas(
   state = "NC",
   year = '2010',
   cb = F
-)
+) %>% 
+  st_transform(crs)
 
 
 # Intersect ZCTA with sf
@@ -86,8 +82,5 @@ wnc_zcta <- wnc_zcta_all %>%
     geometry
   )
 
-st_write(
-  obj = wnc_zcta,
-  dsn = "data/shp/wnc_zcta.shp",
-  append = FALSE
-)
+
+write_sf2(wnc_zcta)
