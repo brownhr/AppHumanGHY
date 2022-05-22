@@ -42,14 +42,14 @@ write_sf2 <-
 # CRS, but you can never be too sure on this and I don't want to mess up our
 # analysis because of a simple mistake like this.
 
-# wnc_zcta <- read_sf("data/shp/places_wnc_zcta.shp") %>%
-#   st_transform(crs)
-#
-# wnc_extent <- read_sf("data/shp/extent.shp") %>%
-#   st_transform(crs)
-#
-# amenities_wnc <- read_sf("data/shp/wnc_amenities.shp") %>%
-#   st_transform(crs)
-#
+wnc_zcta <- read_sf("data/kml/wnc_zcta.kml") %>%
+  st_transform(crs)
+
+wnc_extent <- read_sf("data/kml/wnc_extent.kml") %>%
+  st_transform(crs)
+
+amenities_wnc <- read_sf("data/kml/amenities_wnc.kml") %>%
+  st_transform(crs)
+
 # padus_wnc <- read_sf("data/shp/padus_wnc.shp") %>%
 #   st_transform(crs)
