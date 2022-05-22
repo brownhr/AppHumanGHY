@@ -1,0 +1,22 @@
+<PAMDataset>
+  <Metadata>
+    <MDI key="DataType">Thematic</MDI>
+  </Metadata>
+  <PAMRasterBand band="1">
+    <Description>Band_1</Description>
+    <Histograms>
+      <HistItem>
+        <HistMin>-0.5</HistMin>
+        <HistMax>95.5</HistMax>
+        <BucketCount>96</BucketCount>
+        <IncludeOutOfRange>1</IncludeOutOfRange>
+        <Approximate>0</Approximate>
+        <HistCounts>0|0|0|0|0|0|0|0|0|0|0|225776|0|0|0|0|0|0|0|0|0|2631477|628144|250501|85425|0|0|0|0|0|0|28569|0|0|0|0|0|0|0|0|0|13947693|1208604|6806835|0|0|0|0|0|0|0|0|436818|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|286274|0|0|0|0|0|0|0|0|0|3013170|277109|0|0|0|0|0|0|0|59326|0|0|0|0|5619</HistCounts>
+      </HistItem>
+    </Histograms>
+    <Metadata>
+      <MDI key="BandName">Band_1</MDI>
+      <MDI key="RepresentationType">THEMATIC</MDI>
+    </Metadata>
+  </PAMRasterBand>
+</PAMDataset>
