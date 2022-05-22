@@ -4,4 +4,4 @@ extent <- wnc_zcta %>%
   st_union(by_feature = F) %>% 
   sfheaders::sf_remove_holes()
 
-write_sf(extent, "data/shp/extent.shp")
+write_sf2(extent)
