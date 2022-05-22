@@ -51,8 +51,7 @@ wnc_zcta <- st_read("data/gpkg/wnc_zcta.gpkg") %>%
 
 wnc_extent <- st_read("data/gpkg/wnc_extent.gpkg") %>%
   st_transform(crs)
-# I had to use .shp for this one because of some invalid characters in the
-# dataset :(
+
 amenities_wnc <- st_read("data/gpkg/amenities_wnc.gpkg") %>%
   st_transform(crs)
 
