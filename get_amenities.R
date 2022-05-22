@@ -1,12 +1,11 @@
 # library(tmap)
 library(osmdata)
-library(tidyverse)
-library(sf)
 
-wnc_zcta <- read_sf("data/shp/wnc_zcta.shp") %>%
-  st_transform(crs = st_crs("EPSG:4326"))
 
-wnc_bbox <- st_bbox(wnc_zcta)
+wnc_bbox <- wnc_zcta %>%
+  # Using a different CRS for compatability with OSM API (i.e., lat.long vs )
+  st_transform(crs = st_crs("EPSG:4326")) %>% 
+  st_bbox()
 
 get_amenities <- function(bbox) {
   q <- opq(bbox = unname(bbox),
@@ -29,12 +28,11 @@ get_centroids <- function(shp) {
 wnc_amenities <- wnc_bbox %>%
   get_amenities()
 
+
 wnc_amenities_2 <- wnc_amenities %>% 
   get_centroids() %>%
+  st_transform(crs) %>% 
   select(osm_id, name, amenity, geometry) %>%
   st_filter(wnc_zcta)
 
-write_sf(wnc_amenities_2, "data/shp/wnc_amenities.shp")
-
-
-# wnc_amenities <- read_sf("data/shp/wnc_amenities.shp")
+write_sf2(wnc_amenities_2, name = "amenities_wnc")
