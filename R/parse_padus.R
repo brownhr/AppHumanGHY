@@ -1,7 +1,3 @@
-library(sf)
-library(fs)
-library(tidyverse)
-
 padus_dir <- path("data/gs/PADUS")
 
 padus_files <- list.files(padus_dir, pattern = "\\.shp$", full.names = TRUE)
@@ -40,4 +36,5 @@ padus_wnc_3 <- padus_wnc_2 %>%
     d_IUCN_Cat
   )
 
-write_sf(padus_wnc_3, "data/shp/padus_wnc.shp")
+
+write_sf2(padus_wnc_3, name = "padus_wnc")
