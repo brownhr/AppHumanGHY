@@ -21,7 +21,7 @@ crs <- "EPSG:32119"
 write_sf2 <-
   function(sf,
            dir = "data",
-           drivers = c("gpkg"),
+           drivers = c("gpkg", "shp"),
            name = deparse(substitute(sf))) {
     dir <- as_fs_path(dir)
     filename <- name
