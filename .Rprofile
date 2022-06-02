@@ -2,6 +2,7 @@ source("renv/activate.R")
 library(sf)
 library(tidyverse)
 library(fs)
+library(units)
 
 # NAD 83 / North Carolina: use sf::st_crs("EPSG:32119") for more info
 
@@ -64,3 +65,12 @@ padus_wnc <- st_read("data/gpkg/padus_wnc.gpkg") %>%
 
 places_zcta <- st_read("data/gpkg/places_zcta.gpkg") %>% 
   st_transform(crs)
+
+NDVI_summary <- st_read("data/shp/zcta_NDVI.shp") %>% 
+  st_transform(crs)
+
+trail_summary <- st_read("data/shp/trail_summary2.shp") %>% 
+  st_transform(crs)
+
+
+
