@@ -1,3 +1,4 @@
+source("renv/activate.R")
 library(sf)
 library(tidyverse)
 library(fs)
