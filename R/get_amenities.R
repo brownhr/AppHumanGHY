@@ -11,8 +11,7 @@ get_amenities <- function(bbox) {
   q <- opq(bbox = unname(bbox),
            timeout = 60) %>%
     add_osm_feature(key = "amenity") %>%
-    osmdata_sf() %>%
-    unique_osmdata()
+    osmdata_sf()
 }
 
 get_centroids <- function(list) {
@@ -34,4 +33,8 @@ wnc_amenities_2 <- wnc_amenities %>%
   st_transform(crs) %>% 
   st_filter(wnc_zcta)
 
-write_sf2(wnc_amenities_2, name = "amenities_wnc")
+
+wnc_amenities_3 <- wnc_amenities_2 %>% 
+  dplyr::filter(!is.na(amenity))
+
+write_sf2(wnc_amenities_3, name = "amenities_wnc")
