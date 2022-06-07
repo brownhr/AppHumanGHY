@@ -81,4 +81,5 @@ zcta_pri <- read_csv("data/ZCTA_Pop_Race_Income.csv",
                      ))
 source("R/total_amenities.R")
 source("R/zcta_pop_race_income.R")
+source("R/gs_area.R")
 source("R/zcta_main.R")
