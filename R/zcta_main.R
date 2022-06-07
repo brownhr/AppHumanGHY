@@ -19,11 +19,20 @@ zcta_main <- list(
 ) %>%
   purrr::reduce(dplyr::left_join,
     by = "ZCTA"
-  ) %>%
+  )
+
+
+zcta_main <- zcta_main %>% 
   replace_na(list(
     trail_per_area = units::set_units(0, 1 / km),
     amenities_sum = 0
-  ))
+  )) %>% 
+  mutate(
+    amens_per = amenities_sum / (population_acs2018 / 1000)
+  )
+
+
+
 
 zcta_simplify <- zcta_main %>%
   st_simplify(dTolerance = 50)
