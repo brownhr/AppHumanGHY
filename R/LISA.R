@@ -1,9 +1,9 @@
 library(tmap)
 
 
-lisa_val <- function(sp_var) {
-  L <- localmoran(
-    x = sp_var,
+LISA <- function(sp_var, quadr = T) {
+  L <- spdep::localmoran(
+    x = as.vector(sp_var),
     listw = zcta_listw,
     zero.policy = T,
     na.action = na.pass,
@@ -12,7 +12,7 @@ lisa_val <- function(sp_var) {
   L_quadr <- attr(L, "quadr")[, 1]
   levels(L_quadr) <-
     c("Low-Low", "Low-High", "High-Low", "High-High")
-  return(L_quadr)
+  return(L)
 }
 
 
@@ -35,8 +35,8 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
     )
     na_col <- "gray80"
   }
+  var <- names(select(shp, {{var}}))[[1]]
   
-
   t <- tm_shape(shp) +
     tm_polygons(
 
