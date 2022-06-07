@@ -13,6 +13,3 @@ zcta_cent <- st_centroid(st_geometry(zcta_main))
 
 zcta_listw <- nb2listw(neighbours = zcta_neighbors,
                        zero.policy = F)
-
-moran.test(zcta_main$NDVI_MEAN, listw = zcta_listw,
-           alternative = "two.sided")

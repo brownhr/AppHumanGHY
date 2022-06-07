@@ -42,9 +42,10 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
   }
   
 
-
+  var <- deparse(substitute(var))
   t <- tm_shape(shp) +
     tm_polygons(
+
       col = var,
       palette = LISA_palette,
       border.alpha = 0.3,
