@@ -1,0 +1,14 @@
+
+```{r}
+library(knitr)
+library(kableExtra)
+
+zcta_main %>% 
+  st_drop_geometry() %>% 
+  head() %>% 
+  kable("html") %>% 
+  as_image()
+```
+
+
+
