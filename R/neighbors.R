@@ -12,4 +12,10 @@ zcta_cent <- st_centroid(st_geometry(zcta_main))
 
 
 zcta_listw <- nb2listw(neighbours = zcta_neighbors,
-                       zero.policy = F)
+                       style = "W",
+                       zero.policy = T)
+
+zcta_knn <- knearneigh(zcta_cent,
+                       k = 4) %>% 
+  knn2nb() %>% 
+  nb2listw(zero.policy = T)
