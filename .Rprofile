@@ -72,5 +72,13 @@ NDVI_summary <- st_read("data/shp/zcta_NDVI.shp") %>%
 trail_summary <- st_read("data/shp/trail_summary2.shp") %>% 
   st_transform(crs)
 
-
-
+zcta_pri <- read_csv("data/ZCTA_Pop_Race_Income.csv",
+                     col_types = list(
+                       col_character(),
+                       col_number(),
+                       col_number(),
+                       col_number()
+                     ))
+source("R/total_amenities.R")
+source("R/zcta_pop_race_income.R")
+source("R/zcta_main.R")
