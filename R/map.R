@@ -6,16 +6,21 @@ zcta_simplify <- zcta_main %>% st_simplify(dTolerance = 50) %>%
     across(c(trail_sum, area), drop_units)
   )
 
-tm_shape(zcta_simplify) + 
-  tm_polygons("PCT_White")
 
+zcta_LISA <- zcta_main %>% 
+  mutate(
+    across(c(
+      MHLTH, DEPRESSION, SLEEP,
+      greenspace_n, amens_per, trail_per_area,
+      pct_white, pct_125k, population_acs2018),
+      .fns = LISA, .names = "{.col}_LISA"
+    )
+  )
 
-
-zcta_simplify %>% 
-  mutate(trail_per = trail_sum/area) %>% 
-  tm_shape() + 
-  tm_polygons(col = "trail_per",
-              palette = "Greys",
-              style = "pretty") + 
-  tm_layout(compass.type = "arrow",
-            title = "Total Trail length in km. per sq. km.")
+zcta_LISA %>% 
+  st_drop_geometry() %>% 
+  select(ends_with("_LISA")) %>% 
+  colnames() %>% 
+  lapply(FUN = function(x)tmap_LISA(shp = zcta_LISA, var = x)) %>% 
+  tmap_arrange(ncol = 3, nrow = 3) %>% 
+  tmap_save(filename = "fig/tmap_3x3.png")

@@ -12,7 +12,7 @@ LISA <- function(sp_var, quadr = T) {
   L_quadr <- attr(L, "quadr")[, 1]
   levels(L_quadr) <-
     c("Low-Low", "Low-High", "High-Low", "High-High")
-  return(L)
+  return(L_quadr)
 }
 
 
@@ -35,11 +35,10 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
     )
     na_col <- "gray80"
   }
-  var <- names(select(shp, {{var}}))[[1]]
+  # var <- deparse(substitute(colnames(var)))
   
   t <- tm_shape(shp) +
     tm_polygons(
-
       col = var,
       palette = LISA_palette,
       border.alpha = 0.3,
@@ -51,31 +50,3 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
   return(t)
   
 }
-
-
-
-
-
-
-# LISA_list <-
-#   c("MHLTH_LISA",
-#     "DEPRESSION_LISA",
-#     "SLEEP_LISA",
-#     "NDVI_MEAN_LISA") %>%
-#   map( ~ tmap_LISA(
-#     shp = zcta_main2 %>% st_simplify(dTolerance = 50),
-#     var = .x,
-#     greyscale = T
-#   ))
-
-# 
-# lisa_tmap_list <- tmap_arrange(LISA_list)
-# lisa_tmap_list
-# 
-# tmap_save(
-#   lisa_tmap_list,
-#   filename = "fig/multi_LISA_greyscale.png",
-#   dpi = 300,
-#   width = 10,
-#   height = 7.5
-# )

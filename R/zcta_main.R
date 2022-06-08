@@ -1,7 +1,6 @@
 zcta_main <- list(
   places_zcta %>% select(-GEOID10),
-  trail_summary %>%
-    st_drop_geometry(),
+  trail_summary,
   NDVI_summary %>%
     st_drop_geometry() %>%
     select(ZCTA, NDVI_MEAN),
