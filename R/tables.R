@@ -36,7 +36,8 @@ list(mhealth_lag, depress_lag, sleep_lag) %>%
       
       
       webshot::webshot(url = fs::path(temp),
-                       file = paste0("fig/",name, ".png"))
+                       file = paste0("fig/",name, ".png"),
+                       selector = "tbody")
       fs::file_delete(temp)
     }
   )
