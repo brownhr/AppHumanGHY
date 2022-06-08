@@ -43,10 +43,10 @@ sleep_lag <- lagsarlm(
   zero.policy = TRUE,
   na.action = na.omit
 ) 
-
-list(
-  "mhealth" = mhealth_lag,
-  "depress" = depress_lag,
-  "sleep" = sleep_lag
-) %>%
-  iwalk(~ write_rds(.x, file = paste0("data/rds/", .y, ".Rds")))
+# 
+# list(
+#   "mhealth" = mhealth_lag,
+#   "depress" = depress_lag,
+#   "sleep" = sleep_lag
+# ) %>%
+#   iwalk(~ write_rds(.x, file = paste0("data/rds/", .y, ".Rds")))
