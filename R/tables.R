@@ -51,20 +51,20 @@ library(broom)
 library(pander)
 
 
-texreg::plotreg(model_list,
+forestreg <- texreg::plotreg(model_list,
                 custom.model.names = c("Mental Health", "Depression", "Sleep"),
                 custom.coef.map = list(
-                 "(Intercept)" = "Intercept",
-                 "NDVI_MEAN" = "Mean NDVI",
+                 "(Intercept)" = "Int.",
+                 "NDVI_MEAN" = "NDVI",
                  "greenspace_n" = "GS Area",
-                 "pct_white" = "% White",
-                 "pct_125k" = "% > $125k",
-                 "amens_per" = "Amenities",
+                 "pct_white" = "White",
+                 "pct_125k" = "$125k",
+                 "amens_per" = "Amens.",
                  "trail_per_area" = "Trails",
                  "rho" = "Rho"
                 ), reorder.coef = c(1, 8, 2, 3, 4, 5, 6, 7),
-                theme = theme_bw(),
+                theme = theme_bw(), scales = "free_y",
                 type = "forest") %>% 
   ggsave(filename = "fig/forest_reg.png",
-         width = 4.5, units = "in", dpi = 600)
+         width = 7, units = "in", dpi = 600)
 
