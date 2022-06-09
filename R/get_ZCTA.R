@@ -83,5 +83,5 @@ wnc_zcta <- wnc_zcta_all %>%
   rename(
     ZCTA = ZCTA5CE10)
 
-write_sf2(wnc_counties)
-write_sf2(wnc_zcta)
+# write_sf2(wnc_counties)
+# write_sf2(wnc_zcta)
