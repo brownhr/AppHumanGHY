@@ -332,3 +332,6 @@ data/gs
 arc
 data/NLCD
 data/l8
+
+# Word lock files
+~$*.docx
