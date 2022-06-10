@@ -17,15 +17,29 @@ zcta_LISA <- zcta_main %>%
     )
   )
 
-zcta_LISA %>% 
-  st_drop_geometry() %>% 
+zcta_lisa_simp <- zcta_LISA %>% 
+  st_simplify(dTolerance = 50) %>% 
   select(ends_with("_LISA")) %>% 
+  rename(
+    `MHLTH`= MHLTH_LISA,
+    `Depression` = DEPRESSION_LISA,
+    `Sleep` = SLEEP_LISA,
+    `Greenspace` = greenspace_n_LISA,
+    `Amenities` = amens_per_LISA,
+    Trails = trail_per_area_LISA,
+    `Pct. White` = pct_white_LISA,
+    `Pct. 125k` = pct_125k_LISA
+  )
+
+
+zcta_lisa_simp %>% 
+  st_drop_geometry() %>% 
   select(-population_acs2018_LISA) %>% 
   colnames() %>% 
-  lapply(FUN = function(x)tmap_LISA(shp = zcta_LISA, var = x)) %>% 
-  tmap_arrange(ncol = 4, nrow = 2) %>% 
-  tmap_save(filename = "fig/brownhrLISA_color.png",
-            width = 7, height = 4.25, dpi = 600, asp = 0)
+  lapply(FUN = function(x)tmap_LISA(shp = zcta_lisa_simp, var = x, greyscale = T)) %>% 
+  tmap_arrange(ncol = 2, nrow = 4) %>% 
+  tmap_save(filename = "fig/brownLISA.png", units = "in",
+            width = 7, height = 4.375, dpi = 300)
 
 
 source("R/get_ZCTA.R", echo = T)
