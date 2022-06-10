@@ -41,10 +41,9 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
     tm_polygons(
       col = var,
       palette = LISA_palette,
-      border.alpha = 0.3,
+      border.alpha = 0,
       border.col = "white",
-      colorNA = na_col,
-      lwd = 1.5
+      colorNA = na_col
     )
   
   return(t)
