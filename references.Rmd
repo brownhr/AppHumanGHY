@@ -3,6 +3,6 @@ output: word_document
 bibliography: bibliography.bib
 csl: seg.csl
 nocite: |
-  @nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021; @lachowcyz2013; @wang2021; @collins2020; @verheji2008; @vandillen2012; @wood2017; @wheeler2015 @mears2019; @houlden2019; @mears2019a; @mccal-hosenfeld2014; @cdc2022; @feng2017; @zhang2017; @beyer2014; @mceachen2015; @shin2020; @johnson2018; @feng2020; @thetrustforpublicland2021; @openstreetmap2022; @runkle2022; @slawsky2022; @usgs2019; @wood2018; @browning2018; @hoffiman2017; @rigolon2018; @acs2018; @anselin2009; @legendre1993; @rstudioteam2022; @rcoreteam2022; @beyer2014; @houlden2019; @wang2021; @shin2020; @johnson2018; @xie2020; @feng2020; @chum2015; @astell-burt2020; @feng2017; @mahec; @alcock2015; @devries2020
+  @nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021; @lachowcyz2013; @wang2021; @collins2020; @verheji2008; @vandillen2012; @wood2017; @wheeler2015 @mears2019; @houlden2019; @mears2019a; @mccal-hosenfeld2014; @cdc2022; @feng2017; @zhang2017; @beyer2014; @mceachen2015; @shin2020; @johnson2018; @feng2020; @thetrustforpublicland2021; @openstreetmap2022; @runkle2022; @slawsky2022; @usgs2019; @wood2018; @browning2018; @hoffiman2017; @rigolon2018; @acs2018; @anselin2009; @legendre1993; @rstudioteam2022; @rcoreteam2022; @beyer2014; @houlden2019; @wang2021; @shin2020; @johnson2018; @xie2020; @feng2020; @chum2015; @astell-burt2020; @feng2017; @mahec; @alcock2015; @devries2020; @feng2017; @gresenz2001; @reiss2013; @howell2008
 ---
 
