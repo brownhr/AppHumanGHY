@@ -1,5 +1,5 @@
-library(scales)
-library(ggforce)
+# library(scales)
+# library(ggforce)
 
 zcta_simplify <- zcta_main %>% st_simplify(dTolerance = 50) %>% 
   mutate(
@@ -20,10 +20,12 @@ zcta_LISA <- zcta_main %>%
 zcta_LISA %>% 
   st_drop_geometry() %>% 
   select(ends_with("_LISA")) %>% 
+  select(-population_acs2018_LISA) %>% 
   colnames() %>% 
   lapply(FUN = function(x)tmap_LISA(shp = zcta_LISA, var = x)) %>% 
-  tmap_arrange(ncol = 3, nrow = 3) %>% 
-  tmap_save(filename = "fig/tmap_3x3.png")
+  tmap_arrange(ncol = 4, nrow = 2) %>% 
+  tmap_save(filename = "fig/brownhrLISA_color.png",
+            width = 7, height = 4.25, dpi = 600, asp = 0)
 
 
 source("R/get_ZCTA.R", echo = T)
