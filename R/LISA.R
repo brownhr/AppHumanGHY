@@ -42,8 +42,12 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
       col = var,
       palette = LISA_palette,
       border.alpha = 0,
-      border.col = "white",
+      # border.col = "black",
+      lwd = 0.75,
       colorNA = na_col
+    ) + 
+    tm_layout(
+      inner.margins = c(0.02,0.2,0.02,0)
     )
   
   return(t)

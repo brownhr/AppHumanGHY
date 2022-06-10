@@ -1,10 +1,6 @@
 # library(scales)
 # library(ggforce)
 
-zcta_simplify <- zcta_main %>% st_simplify(dTolerance = 50) %>% 
-  mutate(
-    across(c(trail_sum, area), drop_units)
-  )
 
 
 zcta_LISA <- zcta_main %>% 
@@ -32,14 +28,29 @@ zcta_lisa_simp <- zcta_LISA %>%
   )
 
 
-zcta_lisa_simp %>% 
-  st_drop_geometry() %>% 
-  select(-population_acs2018_LISA) %>% 
-  colnames() %>% 
-  lapply(FUN = function(x)tmap_LISA(shp = zcta_lisa_simp, var = x, greyscale = T)) %>% 
-  tmap_arrange(ncol = 2, nrow = 4) %>% 
-  tmap_save(filename = "fig/brownLISA.png", units = "in",
-            width = 7, height = 4.375, dpi = 300)
+zcta_lisa_simp %>%
+  st_drop_geometry() %>%
+  select(-population_acs2018_LISA) %>%
+  colnames() %>%
+  lapply(
+    FUN = function(x)
+      tmap_LISA(
+        shp = zcta_lisa_simp,
+        var = x,
+        greyscale = F
+      )
+  ) %>%
+  tmap_arrange(
+    ncol = 2,
+    nrow = 4, outer.margins = c(0,0,0,0)
+    ) #%>%
+  tmap_save(
+    filename = "fig/brownLISA.png",
+    units = "in",
+    width = 4.5,
+    height = 7,
+    dpi = 300
+  )
 
 
 source("R/get_ZCTA.R", echo = T)
