@@ -1,0 +1,44 @@
+---
+title: |
+  Template Test Document
+subtitle: |
+  Testing
+
+bibliography: bibliography.bib
+csl: seg.csl
+nocite: '@*'
+
+
+
+output: 
+  bookdown::word_document2:
+    reference_docx: template.docx
+    number_sections: false
+---
+
+# Introduction
+
+`r stringi::stri_rand_lipsum(1)`
+
+`r stringi::stri_rand_lipsum(1)`
+
+`r stringi::stri_rand_lipsum(1)`
+
+# Methods
+
+`r stringi::stri_rand_lipsum(1)`
+
+## Methods Subsection
+
+`r stringi::stri_rand_lipsum(1)`
+
+```{r fig-1, echo = FALSE, fig.width=4.5, fig.cap = "Plot of MPG"}
+
+plot(mtcars$mpg)
+
+```
+
+See figure \@ref(fig:fig-1)
+
+
+# References
