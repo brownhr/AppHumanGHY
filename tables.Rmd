@@ -1,0 +1,14 @@
+---
+output: bookdown::word_document2
+
+---
+
+```{r setup, include = FALSE}
+l <- readRDS("data/lagrange.Rds")
+```
+
+```{r echo = FALSE}
+l$p.value <- as.character(signif(l$p.value))
+knitr::kable(l)
+```
+
