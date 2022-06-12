@@ -7,8 +7,8 @@ zcta_LISA <- zcta_main %>%
   mutate(
     across(c(
       MHLTH, DEPRESSION, SLEEP,
-      greenspace_n, amens_per, trail_per_area,
-      pct_white, pct_125k, population_acs2018),
+      greenspace_n, trail_per_area,
+      pct_white),
       .fns = LISA, .names = "{.col}_LISA"
     )
   )
@@ -21,35 +21,34 @@ zcta_lisa_simp <- zcta_LISA %>%
     `Depression` = DEPRESSION_LISA,
     `Sleep` = SLEEP_LISA,
     `Greenspace` = greenspace_n_LISA,
-    `Amenities` = amens_per_LISA,
     Trails = trail_per_area_LISA,
     `Pct. White` = pct_white_LISA,
-    `Pct. 125k` = pct_125k_LISA
   )
 
 
 zcta_lisa_simp %>%
   st_drop_geometry() %>%
-  select(-population_acs2018_LISA) %>%
+  # select(-population_acs2018_LISA) %>%
   colnames() %>%
   lapply(
     FUN = function(x)
       tmap_LISA(
         shp = zcta_lisa_simp,
         var = x,
-        greyscale = F
+        greyscale = F,
+        im = c(0.02, 0.02, 0.02, 0.02)
       )
   ) %>%
   tmap_arrange(
     ncol = 2,
-    nrow = 4, outer.margins = c(0,0,0,0)
+    nrow = 3, outer.margins = c(0,0,0,0)
     ) #%>%
   tmap_save(
     filename = "fig/brownLISA.png",
     units = "in",
     width = 4.5,
-    height = 7,
-    dpi = 300
+    # height = 7,
+    dpi = 600
   )
 
 
@@ -85,14 +84,17 @@ gs_extent <- st_read("data/shp/gs_extent.shp") %>%
 
 
 {
+  # Color version = "palegreen3"
+  # Greyscale version = "grey60"
+  
     tm_shape(gs_extent) +
-    tm_polygons(col = "grey80", border.alpha = 0) +
+    tm_polygons(col = "grey60", border.alpha = 0) +
     tm_shape(wnc_extent, is.master = T) +
     tm_borders(lwd = 1.5) +
     
     tm_layout(outer.margins = c(0,0,0,0))
   } %>% 
   tmap_save(
-    filename = "fig/greenspace_extent.png",
+    filename = "fig/brownGSExtent.png",
     width = 4.5, units = "in", dpi = 600
   )

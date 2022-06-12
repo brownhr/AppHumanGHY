@@ -16,7 +16,7 @@ LISA <- function(sp_var, quadr = T) {
 }
 
 
-tmap_LISA <- function(shp, var, greyscale = FALSE) {
+tmap_LISA <- function(shp, var, im = c(0.02,0.2,0.02,0), greyscale = FALSE) {
   
   if (greyscale) {
     LISA_palette <- c(
@@ -47,7 +47,7 @@ tmap_LISA <- function(shp, var, greyscale = FALSE) {
       colorNA = na_col
     ) + 
     tm_layout(
-      inner.margins = c(0.02,0.2,0.02,0)
+      inner.margins = im
     )
   
   return(t)
