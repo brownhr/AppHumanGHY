@@ -3,9 +3,15 @@ library(tigris)
 library(sf)
 library(tmap)
 
-nc_censustract <- tigris::tracts(state = "NC",
-                            county = wnc_counties$COUNTYFP,
-                            cb = T)
+crs <- "EPSG:32119"
+source("R/get_ZCTA.R")
+
+states <- c("NC", "TN", "SC", "GA", "VA", "KY")
+
+
+south_ct <- states %>% 
+  map_dfr(~tigris::tracts(state = .x, cb = T))
+
 
 
 places_ct <-
@@ -28,9 +34,13 @@ places_ct <-
     trim_ws = FALSE
   ) %>% 
   filter(
-    StateAbbr == "NC",
+    StateAbbr %in% states,
     MeasureId %in% c("MHLTH", "DEPRESSION", "SLEEP")
   )
+
+
+places_wide <- places_ct %>% 
+  
 
 nc_places <- left_join(nc_censustract, places_ct, by = c("GEOID" = "LocationName"))
 
@@ -43,8 +53,10 @@ nc_places2 <- nc_places %>%
 
 
 nc_places_wide <- nc_places2 %>% 
-  pivot_wider(names_from = MeasureId, values_from = Data_Value)
+  pivot_wider(names_from = MeasureId, values_from = Data_Value) %>% 
+  st_as_sf()
 
 
-nc_places_wide %>% 
-  qtm(fill = "MHLTH")
+c("MHLTH", "DEPRESSION", "SLEEP") %>% 
+  map(~qtm(shp = nc_places_wide, fill = .x)) %>% 
+  tmap_arrange()
