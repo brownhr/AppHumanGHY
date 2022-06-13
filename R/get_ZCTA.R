@@ -45,7 +45,7 @@ wnc_counties <- nc_counties %>%
   # Most of the data is unnecessary; just pull out
   # whatever we need (NAME, GEOID, and geometry)
   dplyr::select(
-    GEOID, NAME, geometry
+    GEOID, NAME, geometry, STUSPS, COUNTYFP
   )
 
 # Save the results to a file so we can use this later
