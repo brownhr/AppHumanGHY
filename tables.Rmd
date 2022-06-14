@@ -1,5 +1,25 @@
 ---
-output: bookdown::word_document2
+output: 
+  officedown::rdocx_document:
+    # number_sections: false
+    # reference_docx: template.docx
+    tables:
+      # style: stat_table
+      caption:
+        # style: TableCaption
+        pre: "Table "
+        sep: ": "
+    plots:
+      align: center
+    page_size:
+      width: 8.5
+      heigh: 11
+    page_margins:
+      bottom: 1
+      top: 1
+      right: 1
+      left: 1
+      gutter: 0
 # header-includes:
 #   \usepackage{booktabs}
 #   \usepackage{dcolumn}  
@@ -9,17 +29,18 @@ output: bookdown::word_document2
 l <- readRDS("data/lagrange.Rds")
 library(tidyverse)
 library(spatialreg)
+library(officedown)
 source("R/extract.R")
 model_list <- readr::read_rds("model_list.Rds")
 ```
 
-```{r echo = FALSE,}
+```{r echo = FALSE, fig.cap = "Lagrange Multiplier", fig.id = "lagrange"}
 l$p.value <- as.character(signif(l$p.value))
-knitr::kable(l)
+l
 ```
 
 RENAME RHO IN MODEL
-```{r echo = FALSE, eval=T}
+```{r echo = FALSE, eval=F}
 # extract_list <-
 #   purrr::map(
 #     model_list,

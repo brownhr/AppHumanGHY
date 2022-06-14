@@ -2,8 +2,8 @@
 title: |
   Spatial analysis of greenspace and mental health: consideration of greenspace quantity and quality
 
-abstract: |
-  Greenspace benefits mental health by offering avenues for physical recreation, social cohesion, restorative experiences, and pollution reduction. Greenspace mental health research has primarily focused on the greenspace-mental health relationship in urban areas, with less attention given to greenspaces in rural areas. In addition, most greenspace research focuses on the quantity of greenspace; inclusion of greenspace quality, however, furthers understanding of the greenspace mental health relationship. This study analyzed the greenspace mental health relationship in Western North Carolina, a predominantly rural, mountainous region. Greenspace was quantified as public greenspaces from the PAD-US and ParkServe datasets, with quality metrics including amenities, trail density, and Normalized Difference Vegetation Index (NDVI). The CDC PLACES dataset from 2020 was used for three mental health outcomes: (1) general mental health, (2) depression diagnoses, and (3) poor sleep. Spatial regression revealed that these metrics do not significantly affect mental health, but greenspace quality did have small protective benefits for sleep. Sociodemographic factors were found to be more predictive of poor mental health outcomes than greenspace metrics. Local Indicators of Spatial Autocorrelation (LISA) analysis found mental health outcomes clustered spatially, while greenspace metrics did not. This analysis furthers understanding of the greenspace mental health relationship in rural regions.
+# abstract: |
+#   Greenspace benefits mental health by offering avenues for physical recreation, social cohesion, restorative experiences, and pollution reduction. Greenspace mental health research has primarily focused on the greenspace-mental health relationship in urban areas, with less attention given to greenspaces in rural areas. In addition, most greenspace research focuses on the quantity of greenspace; inclusion of greenspace quality, however, furthers understanding of the greenspace mental health relationship. This study analyzed the greenspace mental health relationship in Western North Carolina, a predominantly rural, mountainous region. Greenspace was quantified as public greenspaces from the PAD-US and ParkServe datasets, with quality metrics including amenities, trail density, and Normalized Difference Vegetation Index (NDVI). The CDC PLACES dataset from 2020 was used for three mental health outcomes: (1) general mental health, (2) depression diagnoses, and (3) poor sleep. Spatial regression revealed that these metrics do not significantly affect mental health, but greenspace quality did have small protective benefits for sleep. Sociodemographic factors were found to be more predictive of poor mental health outcomes than greenspace metrics. Local Indicators of Spatial Autocorrelation (LISA) analysis found mental health outcomes clustered spatially, while greenspace metrics did not. This analysis furthers understanding of the greenspace mental health relationship in rural regions.
 
 bibliography: bibliography.bib
 csl: seg.csl
@@ -15,7 +15,7 @@ output:
     # number_sections: false
     # reference_docx: template.docx
     tables:
-      # style: stat_table
+      # style: cooltable
       caption:
         # style: TableCaption
         pre: "Table "
@@ -30,6 +30,7 @@ output:
       top: 1
       right: 1
       left: 1
+      gutter: 0
       
 # lot: true
 # lof: true
@@ -223,7 +224,7 @@ Spatial regression analysis found that none of the greenspace metrics were assoc
 
 
 ```{r tab.id = "sarlm", tab.cap = "Spatial lag regression coefficients for each mental health outcome"}
-model_list %>%
+sarlm_tab <- model_list %>%
   map(function(x) {
     extract.Sarlm2(x)
   }) %>%
@@ -233,7 +234,7 @@ model_list %>%
     dcolumn = T,
     custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
     custom.coef.names = c(
-      NA,
+      "(Intercept)",
       "Mean NDVI",
       "Greenspace Area",
       "Percent White",
@@ -241,13 +242,14 @@ model_list %>%
       "Amenities",
       "Trails",
       "rho"
-      
     ),
     float.pos = "h"
   ) %>% 
+  as.data.frame() %>% 
   as_tibble() %>% 
   `colnames<-`(.[1, ]) %>% 
   .[-1, ]
+sarlm_tab
 ```
 
 
