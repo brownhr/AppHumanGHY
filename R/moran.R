@@ -25,4 +25,5 @@ zcta_moran %>%
     Variable = c("Population", "Mental Health", "Depression",
                  "Sleep", "Percent White", "Income", 
                  "Greenspace Area", "Amenities", "Trails"), .before = estimate1
-  )
+  ) %>% 
+  write_rds("data/moran.Rds")
