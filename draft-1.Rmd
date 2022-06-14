@@ -38,13 +38,25 @@ You have 6 H1 headings. You may want to use the "H1 -> H2" option to demote all 
 
 <!-- Authors: Harrison Brown, Josh R Platt, Sophia C Ryan, Maggie M Sugg, Jennifer D Runkle -->
 
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+
+l <- readRDS("data/lagrange.Rds")
+library(tidyverse)
+library(texreg)
+library(spatialreg)
+source("R/extract.R")
+model_list <- readr::read_rds("model_list.Rds")
+```
 
 
 
 
 # INTRODUCTION
 
-Proximity to greenspace is a potential determinant on an individual’s mental health [@nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021]. As a low-cost mental health intervention, greenspace provides restorative experiences, encourages social cohesion, reduces pollution, and offers opportunities for physical activity [@lachowecyz2013; @wang2021]. To date, most greenspace research has focused on the greenspace mental health relationship in urban areas, with less attention focused on rural communities [@collins2020]. Within studies that have considered the greenspace mental health relationship in rural areas, evidence is mixed, with some studies finding greenspace benefits mental health similarly in rural areas as compared to urban areas (Verheji et al. 2008; Alcock et al. 2015). Other research suggests that the rural greenspace mental health relationship differs from the urban relationship (Jiang et al. 2021), with private greenspaces — including yards, agricultural fields, and general “countryside greenness” — playing an important role in the rural greenspace mental health relationship (Ekkel & deVries, 2017). As such, further investigation into the rural greenspace mental health relationship is needed, specifically with regards to public greenspace quality, in addition to greenspace quantity — i.e., available area within a greenspace.
+Proximity to greenspace is a potential determinant on an individual’s mental health [@nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021]. As a low-cost mental health intervention, greenspace provides restorative experiences, encourages social cohesion, reduces pollution, and offers opportunities for physical activity [@lachowecyz2013; @wang2021]. To date, most greenspace research has focused on the greenspace mental health relationship in urban areas, with less attention focused on rural communities [@collins2020]. Within studies that have considered the greenspace mental health relationship in rural areas, evidence is mixed, with some studies finding greenspace benefits mental health similarly in rural areas as compared to urban areas [@verheji2008; @alcock2015]. Other research suggests that the rural greenspace mental health relationship differs from the urban relationship [@jiang2021], with private greenspaces — including yards, agricultural fields, and general “countryside greenness” — playing an important role in the rural greenspace mental health relationship [@ekkel2017]. As such, further investigation into the rural greenspace mental health relationship is needed, specifically with regards to public greenspace quality, in addition to greenspace quantity — i.e., available area within a greenspace.
 
 Most greenspace studies consider greenspace quantity as the primary metric, with less attention given to greenspace quality (Collins et al., 2020). Past research has found that an increased quantity of greenspace tends to correspond with better mental health outcomes (van Dillen et al., 2012; Wood et al., 2017; Wang et al., 2021). However, more research is needed to determine whether greenspace quality — attributes including nearby amenities, “greenness” metrics like NDVI, or the presence of public hiking or biking trails — are significant predictors of mental health outcomes. 
 
@@ -58,27 +70,26 @@ Western North Carolina is a predominantly rural, mountainous region. Mental heal
 
 ## Study Area
 
-Several geographical, environmental, and administrative definitions of Western North Carolina (WNC) are defined across the literature; in this study, Western North Carolina is defined as communities enclosed in the North Carolina Blue Ridge Mountains, encompassing 160 total ZIP codes within 23 counties (Figure 1). ZIP codes are used as the defining administrative level due to the availability of publicly-accessible mental health and demographic data, e.g., the PLACES dataset, which had substantial missing data at the census tract scale for this region. WNC is predominantly rural and mountainous, with pockets of urbanization, most notably Asheville, NC. Greenspace varies from public parks to expansive National Forest land (Figure 2).
+Several geographical, environmental, and administrative definitions of Western North Carolina (WNC) are defined across the literature; in this study, Western North Carolina is defined as communities enclosed in the North Carolina Blue Ridge Mountains, encompassing 160 total ZIP codes within 23 counties ***(Figure 1)***. ZIP codes are used as the defining administrative level due to the availability of publicly-accessible mental health and demographic data, e.g., the PLACES dataset, which had substantial missing data at the census tract scale for this region. WNC is predominantly rural and mountainous, with pockets of urbanization, most notably Asheville, NC. Greenspace varies from public parks to expansive National Forest land ***(Figure 2)***.
+
+
+```{r extent, fig.width = 4.5, fig.cap = "Extent of ZIP codes (dark gray) within Western NC (light gray)"}
+knitr::include_graphics("fig/brownExtent.png", dpi = 600)
+```
 
 
 
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image1.png "image_tooltip")
-
-
-Figure 1: Extent of ZIP codes (dark gray) within Western NC (light gray)
+<!-- Figure 1: Extent of ZIP codes (dark gray) within Western NC (light gray) -->
 
 
 
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image2.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+```{r gs-extent, fig.width = 4.5, fig.cap = "Extent of combined PAD-US and ParkServe greenspace areas (dark gray)"}
+knitr::include_graphics("fig/brownGSExtent.png", dpi = 600)
+```
 
 
-![alt_text](images/image2.png "image_tooltip")
 
-
-Figure 2: Extent of combined PAD-US and ParkServe greenspace areas (dark gray)
+<!-- Figure 2: Extent of combined PAD-US and ParkServe greenspace areas (dark gray) -->
 
 
 ## Mental Health Data
@@ -88,7 +99,7 @@ For this analysis, three mental health outcomes were considered: (1) general men
 
 ## Greenspace Quantity
 
-This study identifies greenspace as areas encompassed by the Trust for Public Land’s ParkServe (ParkServe) dataset and The Protected Area Database of the United States (PAD-US) dataset from 2020 (Runkle et al., 2022; Slawsky et al., 2022; TPL 2020; USGS 2020). ParkServe is a dataset comprising all public parks, including local and city parks and playgrounds (TPL 2020). PAD-US is a spatial dataset of all government-managed greenspaces, such as national forest land, national parks, and historical areas (USGS 2020). All parks and public greenspaces selected from these two datasets were combined to form one public greenspace dataset (Figure 2). For consistency with the PLACES mental health datasets at the ZIP Code level, greenspace area was calculated as the percentage of an area within each ZIP code covered by greenspace (defined by the ParkServe and PAD-US datasets); redundant or overlapping greenspaces (i.e., the same greenspace within both datasets) were removed by performing a spatial union of the two datasets, such that overlapping greenspaces do not overestimate greenspace area.
+This study identifies greenspace as areas encompassed by the Trust for Public Land’s ParkServe (ParkServe) dataset and The Protected Area Database of the United States (PAD-US) dataset from 2020 (Runkle et al., 2022; Slawsky et al., 2022; TPL 2020; USGS 2020). ParkServe is a dataset comprising all public parks, including local and city parks and playgrounds (TPL 2020). PAD-US is a spatial dataset of all government-managed greenspaces, such as national forest land, national parks, and historical areas (USGS 2020). All parks and public greenspaces selected from these two datasets were combined to form one public greenspace dataset ***(Figure 2)***. For consistency with the PLACES mental health datasets at the ZIP Code level, greenspace area was calculated as the percentage of an area within each ZIP code covered by greenspace (defined by the ParkServe and PAD-US datasets); redundant or overlapping greenspaces (i.e., the same greenspace within both datasets) were removed by performing a spatial union of the two datasets, such that overlapping greenspaces do not overestimate greenspace area.
 
 
 ## Greenspace Quality
@@ -97,262 +108,50 @@ For this analysis, greenspace quality was determined by looking at vegetation he
 
 Greenspace amenities data from ParkServe, specifically trail accessibility, and OpenStreetMap (OSM) data, provided information on how many greenspace-related amenities (e.g., restrooms, parking) are present in each ZIP Code. OSM data was queried for the study area with the _osmdata_ package for R (Padgham 2017) and subsequently spatially filtered to within a 1-km buffer of greenspace extent. This allows for amenities that are “nearby” to greenspaces (e.g., restrooms, restaurants, parking) to factor into greenspace quality. Amenities were summarized as the count of amenities within the 1-km buffer of greenspace extent, and were counted for each ZIP code.
 
-_Covariates_
+## Covariates
 
 Additional demographic predictor variables include population, race, and household income. Previous research has illustrated that race (Browning & Rigolon, 2018) and income (Hoffiman et al., 2017; deVries et al., 2020) influence the greenspace mental health relationship, as predominantly white, upper-class neighborhoods tend to have the greatest access to greenspaces (Rigolon et al., 2018). Race was accounted for by including the percentage of White residents, and income was accounted for by including the percentage of households with annual income over $125,000/year. Race and Income variables are from 2018 ACS 5-year estimates (U.S. Census Bureau, 2018).
 
 
 ## Regression Analysis
 
-All variables were tested for spatial autocorrelation; Moran’s I was used to assess spatial autocorrelation at a significance level of _p_&lt;0.05. _P_-values at or below 0.05 and an Moran’s I-statistic 
+All variables were tested for spatial autocorrelation; Moran’s I was used to assess spatial autocorrelation at a significance level of $p < 0.05$. *P*-values at or below 0.05 and an Moran’s I-statistic of $I \neq 0$ indicate spatial autocorrelation and spatial dependence, pointing to the need to perform spatial regression (Anselin, 2009; Legendre, 1993). The spatial weights matrix $W_{ij}$ was defined using the queen’s case rule. All variables except population, income and greenspace amenities were found to be spatially autocorrelated (Table 1). Variables were tested for multicollinearity, no variables were above the threshold of 5 (Table 2) (Craney & Surles, 2002). 
 
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: equation: use MathJax/LaTeX if your publishing platform supports it. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+```{r moran-table}
+moran <- read_rds("data/moran.Rds") %>%
+  mutate(across(.fns = as.character))
 
- indicate spatial autocorrelation and spatial dependence, pointing to the need to perform spatial regression (Anselin, 2009; Legendre, 1993). The spatial weights matrix W_ij was defined using the queen’s case rule. All variables except population, income and greenspace amenities were found to be spatially autocorrelated (Table 1). Variables were tested for multicollinearity, no variables were above the threshold of 5 (Table 2) (Craney & Surles, 2002). 
+knitr::kable(moran,
+             col.names = c("Variable", "Moran's I", "Expected", "Variance", "SD", "p value"),
+             caption = "Calculated statistics for Moran’s I across predictor and response variables")
 
-
-<table>
-  <tr>
-   <td><strong>Variable</strong>
-   </td>
-   <td><strong>Moran’s I</strong>
-   </td>
-   <td><strong>Expectation</strong>
-   </td>
-   <td><strong>Variance</strong>
-   </td>
-   <td><strong>SD</strong>
-   </td>
-   <td><strong>P-value</strong>
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Population</strong>
-   </td>
-   <td>0.070
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>1.502
-   </td>
-   <td>0.133
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Mental Health</strong>
-   </td>
-   <td>0.367
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>7.170
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Depression</strong>
-   </td>
-   <td>0.394
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>7.672
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Sleep</strong>
-   </td>
-   <td>0.536
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>10.435
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Pct. White</strong>
-   </td>
-   <td>0.132
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>2.780
-   </td>
-   <td>0.005
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Income</strong>
-   </td>
-   <td>0.011
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.002
-   </td>
-   <td>0.387
-   </td>
-   <td>0.700
-   </td>
-  </tr>
-  <tr>
-   <td><strong>GS Area</strong>
-   </td>
-   <td>0.739
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.003
-   </td>
-   <td>14.131
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Amenities</strong>
-   </td>
-   <td>0.0002
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.00
-   </td>
-   <td>1.081
-   </td>
-   <td>0.280
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Trails</strong>
-   </td>
-   <td>0.292
-   </td>
-   <td>-0.006
-   </td>
-   <td>0.002
-   </td>
-   <td>6.626
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-</table>
+```
 
 
-_Table 1: Calculated statistics for Moran’s I across predictor and response variables._
+
+<!-- _Table 1: Calculated statistics for Moran’s I across predictor and response variables._ -->
+
+```{r vif}
+basic_list <- read_rds("data/basic_list.Rds")
+basic_list %>% map_dfr(regclass::VIF) %>% t() %>% `row.names<-`(c("Mean NDVI", "Greenspace Area", "Percent White", "Income", "Amenities", "Trails")) %>% `colnames<-`(c("MHLTH", "DEPRESSION", "SLEEP")) %>% 
+  knitr::kable(digits = 4, caption = "Variance Inflation Factors for variables")
+
+```
 
 
-<table>
-  <tr>
-   <td>Variable
-   </td>
-   <td>VIF
-   </td>
-  </tr>
-  <tr>
-   <td>NDVI_MEAN
-   </td>
-   <td>1.14614
-   </td>
-  </tr>
-  <tr>
-   <td>greenspace_n
-   </td>
-   <td>1.20967
-   </td>
-  </tr>
-  <tr>
-   <td>pct_white
-   </td>
-   <td>1.06535
-   </td>
-  </tr>
-  <tr>
-   <td>pct_125k
-   </td>
-   <td>1.15833
-   </td>
-  </tr>
-  <tr>
-   <td>amens_per
-   </td>
-   <td>1.37886
-   </td>
-  </tr>
-  <tr>
-   <td>trail_per_area
-   </td>
-   <td>1.0464
-   </td>
-  </tr>
-</table>
 
-
-_Table a: Variance Inflation Factors for variables. _
+<!-- _Table a: Variance Inflation Factors for variables. _ -->
 
 The Lagrange multiplier diagnostics for spatial dependence test was conducted, which illustrates the spatial regression model (spatial error, spatial lag, and robust versions) that performs best for the spatially autocorrelated variables. The spatial regression with the lowest _p_-value and highest statistic was selected. For this analysis, the spatial lag model was the most significant model (Table 2).
 
-_Table 2: Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis._
+<!-- _Table 2: Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis._ -->
 
 
-<table>
-  <tr>
-   <td><strong>Method</strong>
-   </td>
-   <td><strong>Statistic</strong>
-   </td>
-   <td><strong><em>p</em>-value</strong>
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Spatial Error</strong>
-   </td>
-   <td>37.061
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Spatial Lag</strong>
-   </td>
-   <td>48.450
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Robust SE</strong>
-   </td>
-   <td>3.804
-   </td>
-   <td>0.05
-   </td>
-  </tr>
-  <tr>
-   <td><strong>Robust SL</strong>
-   </td>
-   <td>15.193
-   </td>
-   <td>&lt;0.001
-   </td>
-  </tr>
-</table>
+```{r, lagrange}
+l$p.value <- as.character(signif(l$p.value))
+knitr::kable(l, caption = "Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis")
+```
+
 
 
 All regression analysis considered greenspace metrics (quantity, NDVI, trail density, and amenities) in addition to percent of the ZIP Code that is White and percent of households in each ZIP Code that makes over $125,000 per year. All regression analyses were performed in RStudio version 2022.2.3.492 with R version 4.2.0 (2022-04-22 ucrt) (RStudio Team, 2022; R Core Team, 2022). 
@@ -360,14 +159,14 @@ All regression analysis considered greenspace metrics (quantity, NDVI, trail den
 
 ## Local Indicators of Spatial Autocorrelation (LISA)
 
-Given that the data were spatially autocorrelated, Local Indicators of Spatial Autocorrelation (LISA) were used to identify and visualize spatially explicit clustering of health outcomes, greenspace metrics and demographic and socioeconomic variables (Figure 3). LISA clustering was not significant across variables. However, the results highlight trends of spatially explicit clustering. High-high clustering illustrates locations with high rates of the variable of interest that are surrounded by other locations with high rates of the variable, high-low corresponds to high rates surrounded by low rates, low-low illustrates low rates surrounded by low rates and low-high signals low rates surrounded by high rates.
+Given that the data were spatially autocorrelated, Local Indicators of Spatial Autocorrelation (LISA) were used to identify and visualize spatially explicit clustering of health outcomes, greenspace metrics and demographic and socioeconomic variables ***(Figure 3)***. LISA clustering was not significant across variables. However, the results highlight trends of spatially explicit clustering. High-high clustering illustrates locations with high rates of the variable of interest that are surrounded by other locations with high rates of the variable, high-low corresponds to high rates surrounded by low rates, low-low illustrates low rates surrounded by low rates and low-high signals low rates surrounded by high rates.
 
 
 
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image3.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
+```{r lisa, fig.width=4.5, fig.cap = "Results from LISA highlighting general trend from hot (high-high) to cold(low-low) clustering of each variable. Note that not all locations have a p-value < 0.05 and that this figure is meant as a visual aid"}
+knitr::include_graphics("fig/brownLISA.png")
+```
 
-
-![alt_text](images/image3.png "image_tooltip")
 
 
 Figure 3: Results from LISA analysis highlighting hot (high-high) and cold (low-low) clustering of each variable
@@ -381,171 +180,34 @@ Figure 3: Results from LISA analysis highlighting hot (high-high) and cold (low-
 Spatial regression analysis found that none of the greenspace metrics were associated with reductions in reported poor mental health (Table 3).** **Percent of the ZIP Code that is White (𝛽 = -4.476, _p_ &lt;0.001) and percent of households in the ZIP Code making over $125,000 (𝛽 = -4.638, _p_ &lt;0.001) were significantly associated with reductions in mental health outcomes (Table 3).
 
 
-<table>
-  <tr>
-   <td> 
-   </td>
-   <td>MHLTH
-   </td>
-   <td>DEPRESSION
-   </td>
-   <td>SLEEP
-   </td>
-  </tr>
-  <tr>
-   <td>(Intercept)
-   </td>
-   <td>10.15 (1.73) ***
-   </td>
-   <td>9.58 (2.12) ***
-   </td>
-   <td>14.45 (2.19) ***
-   </td>
-  </tr>
-  <tr>
-   <td>Mean NDVI
-   </td>
-   <td>0.87 (2.53)
-   </td>
-   <td>1.69 (2.21)
-   </td>
-   <td>-1.38 (2.60)
-   </td>
-  </tr>
-  <tr>
-   <td>Greenspace Area
-   </td>
-   <td>0.29 (0.32)
-   </td>
-   <td>0.21 (0.28)
-   </td>
-   <td>0.74 (0.33) *
-   </td>
-  </tr>
-  <tr>
-   <td>Percent White
-   </td>
-   <td>-4.48 (1.11) ***
-   </td>
-   <td>-0.57 (0.97)
-   </td>
-   <td>-6.98 (1.15) ***
-   </td>
-  </tr>
-  <tr>
-   <td>Income
-   </td>
-   <td>-4.64 (1.16) ***
-   </td>
-   <td>-2.92 (1.01) **
-   </td>
-   <td>-5.71 (1.19) ***
-   </td>
-  </tr>
-  <tr>
-   <td>Amenities
-   </td>
-   <td>-0.00 (0.01)
-   </td>
-   <td>-0.00 (0.01)
-   </td>
-   <td>-0.02 (0.01) *
-   </td>
-  </tr>
-  <tr>
-   <td>Trails
-   </td>
-   <td>-0.18 (0.56)
-   </td>
-   <td>-0.26 (0.49)
-   </td>
-   <td>-0.28 (0.58)
-   </td>
-  </tr>
-  <tr>
-   <td>rho
-   </td>
-   <td>0.59 (0.08) ***
-   </td>
-   <td>0.62 (0.08) ***
-   </td>
-   <td>0.78 (0.05) ***
-   </td>
-  </tr>
-  <tr>
-   <td>Num. obs.
-   </td>
-   <td>151
-   </td>
-   <td>151
-   </td>
-   <td>151
-   </td>
-  </tr>
-  <tr>
-   <td>Parameters
-   </td>
-   <td>9
-   </td>
-   <td>9
-   </td>
-   <td>9
-   </td>
-  </tr>
-  <tr>
-   <td>Log Likelihood
-   </td>
-   <td>-263.91
-   </td>
-   <td>-244.48
-   </td>
-   <td>-274.50
-   </td>
-  </tr>
-  <tr>
-   <td>AIC (Linear model)
-   </td>
-   <td>584.95
-   </td>
-   <td>550.63
-   </td>
-   <td>670.83
-   </td>
-  </tr>
-  <tr>
-   <td>AIC (Spatial model)
-   </td>
-   <td>545.82
-   </td>
-   <td>506.96
-   </td>
-   <td>567.00
-   </td>
-  </tr>
-  <tr>
-   <td>LR test: statistic
-   </td>
-   <td>41.13
-   </td>
-   <td>45.67
-   </td>
-   <td>105.82
-   </td>
-  </tr>
-  <tr>
-   <td>LR test: p-value
-   </td>
-   <td>0.00
-   </td>
-   <td>0.00
-   </td>
-   <td>0.00
-   </td>
-  </tr>
-</table>
+```{r sarlm-table}
+model_list %>%
+  map(function(x) {
+    extract.Sarlm2(x)
+  }) %>%
+  texreg::texreg(
+    single.row = T,
+    booktabs = T,
+    dcolumn = T,
+    custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
+    custom.coef.names = c(
+      NA,
+      "Mean NDVI",
+      "Greenspace Area",
+      "Percent White",
+      "Income",
+      "Amenities",
+      "Trails",
+      "rho"
+      
+    ),
+    float.pos = "h", caption = "Spatial lag regression coefficients for each mental health outcome"
+  )
+```
 
 
-_Table 3: Spatial-Lag regression coefficients for mental health outcomes._
+
+<!-- _Table 3: Spatial-Lag regression coefficients for mental health outcomes._ -->
 
 
 ## Depression
@@ -557,9 +219,9 @@ Greenspace metrics are not significantly associated with depression (Table 3). P
 
 Spatial regression found poor sleep to be significantly associated with greenspace metrics (Table 3). Greenspace quantity (𝛽 = 0.743, _p_:0.026) was significantly associated with an increase in reported poor sleep, while greenspace amenities (𝛽 = -0.015, _p_&lt;0.001) were significant;y associated with a decrease in reported poor sleep. Percent White (𝛽 = -6.980, _p_&lt;0.001) and percent of households making over $125,000 (𝛽 = -5.707, _p_&lt;0.001) were both significantly associated with reductions in reported poor sleep outcomes (Table 3). 
 
-_Local Indicators of Spatial Autocorrelation (LISA)_
+## Local Indicators of Spatial Autocorrelation (LISA)
 
-LISA analysis identified spatially explicit locations of mental health, greenspace and sociodemographic clustering (Figure 3). All mental health outcomes illustrate similar clustering patterns, with high-high clustering found in the northern, eastern, and southwestern parts of the region. Low-low mental health clustering for all outcomes occurred in the central and southern part of the region. Greenspace clustering varied depending on the metric, with high-high trail length clustering in the southern part of the region, while greenspace quantity clustered in the southwest and northern parts of the region. NDVI clustered along the western edge of the region, and amenities, which clustered throughout the region. Race and income metrics (percent White and percent households with annual income over $125,000) have high-high clustering dispersed throughout the region (Figure 3).
+LISA analysis identified spatially explicit locations of mental health, greenspace and sociodemographic clustering ***(Figure 3)***. All mental health outcomes illustrate similar clustering patterns, with high-high clustering found in the northern, eastern, and southwestern parts of the region. Low-low mental health clustering for all outcomes occurred in the central and southern part of the region. Greenspace clustering varied depending on the metric, with high-high trail length clustering in the southern part of the region, while greenspace quantity clustered in the southwest and northern parts of the region. NDVI clustered along the western edge of the region, and amenities, which clustered throughout the region. Race and income metrics (percent White and percent households with annual income over $125,000) have high-high clustering dispersed throughout the region ***(Figure 3)***.
 
 
 # DISCUSSION
@@ -592,80 +254,80 @@ This study considered the greenspace mental health relationship in Western North
 
 # REFERENCES
 
-Alcock, I. et al. 2015. What accounts for ‘England’s green and pleasant land’? A panel data analysis of mental health and land cover types in rural England. _Landscape and Urban Planning_ 142: 38–46.[ https://doi.org/10.1016/j.landurbplan.2015.05.008](https://doi.org/10.1016/j.landurbplan.2015.05.008).
+<!-- Alcock, I. et al. 2015. What accounts for ‘England’s green and pleasant land’? A panel data analysis of mental health and land cover types in rural England. _Landscape and Urban Planning_ 142: 38–46.[ https://doi.org/10.1016/j.landurbplan.2015.05.008](https://doi.org/10.1016/j.landurbplan.2015.05.008). -->
 
-Astell-Burt, T., and Feng, X. 2020. Does sleep grow on trees? A longitudinal study to investigate potential prevention of insufficient sleep with different types of urban green space. _SSM - Population Health_ 10: 100497.[ https://doi.org/10.1016/j.ssmph.2019.100497](https://doi.org/10.1016/j.ssmph.2019.100497).
+<!-- Astell-Burt, T., and Feng, X. 2020. Does sleep grow on trees? A longitudinal study to investigate potential prevention of insufficient sleep with different types of urban green space. _SSM - Population Health_ 10: 100497.[ https://doi.org/10.1016/j.ssmph.2019.100497](https://doi.org/10.1016/j.ssmph.2019.100497). -->
 
-Beyer, K.M. et al. 2014. Exposure to neighborhood green space and mental health: Evidence from the survey of the health of Wisconsin. _International journal of environmental research and public health_ 11 (3): 3453–3472.[ https://doi.org/10.3390/ijerph110303453](https://doi.org/10.3390/ijerph110303453).
+<!-- Beyer, K.M. et al. 2014. Exposure to neighborhood green space and mental health: Evidence from the survey of the health of Wisconsin. _International journal of environmental research and public health_ 11 (3): 3453–3472.[ https://doi.org/10.3390/ijerph110303453](https://doi.org/10.3390/ijerph110303453). -->
 
-Browning, M.H.E.M., and Rigolon, A. 2018. Do Income, Race and Ethnicity, and Sprawl Influence the Greenspace-Human Health Link in City-Level Analyses? Findings from 496 Cities in the United States. _International Journal of Environmental Research and Public Health_ 15 (7): E1541.[ https://doi.org/10.3390/ijerph15071541](https://doi.org/10.3390/ijerph15071541).
+<!-- Browning, M.H.E.M., and Rigolon, A. 2018. Do Income, Race and Ethnicity, and Sprawl Influence the Greenspace-Human Health Link in City-Level Analyses? Findings from 496 Cities in the United States. _International Journal of Environmental Research and Public Health_ 15 (7): E1541.[ https://doi.org/10.3390/ijerph15071541](https://doi.org/10.3390/ijerph15071541). -->
 
-Bureau, U.S.C. 2018. 2014-2018 American Community Survey 5-Year Demographic Estimates.
+<!-- Bureau, U.S.C. 2018. 2014-2018 American Community Survey 5-Year Demographic Estimates. -->
 
-CDC 2022. _PLACES: Local Data for Better Health_. 2022. Available at[ https://www.cdc.gov/places/index.html](https://www.cdc.gov/places/index.html) [Last accessed 6 June 2022].
+<!-- CDC 2022. _PLACES: Local Data for Better Health_. 2022. Available at[ https://www.cdc.gov/places/index.html](https://www.cdc.gov/places/index.html) [Last accessed 6 June 2022]. -->
 
-Chum, A., O’Campo, P., and Matheson, F. 2015. The impact of urban land uses on sleep duration and sleep problems. _The Canadian Geographer / Le Géographe canadien_ 59 (4): 404–418.[ https://doi.org/10.1111/cag.12202](https://doi.org/10.1111/cag.12202).
+<!-- Chum, A., O’Campo, P., and Matheson, F. 2015. The impact of urban land uses on sleep duration and sleep problems. _The Canadian Geographer / Le Géographe canadien_ 59 (4): 404–418.[ https://doi.org/10.1111/cag.12202](https://doi.org/10.1111/cag.12202). -->
 
-Collins, R. et al. 2020. _A systematic map of research exploring the effect of greenspace on mental health_. 11 May 2020. Available at[ https://eprints.soton.ac.uk/440876/](https://eprints.soton.ac.uk/440876/) [Last accessed 24 September 2021].
+<!-- Collins, R. et al. 2020. _A systematic map of research exploring the effect of greenspace on mental health_. 11 May 2020. Available at[ https://eprints.soton.ac.uk/440876/](https://eprints.soton.ac.uk/440876/) [Last accessed 24 September 2021]. -->
 
-de Vries, S., Buijs, A.E., and Snep, R.P.H. 2020. Environmental Justice in The Netherlands: Presence and Quality of Greenspace Differ by Socioeconomic Status of Neighbourhoods. _Sustainability_ 12 (15, 15): 5889.[ https://doi.org/10.3390/su12155889](https://doi.org/10.3390/su12155889).
+<!-- de Vries, S., Buijs, A.E., and Snep, R.P.H. 2020. Environmental Justice in The Netherlands: Presence and Quality of Greenspace Differ by Socioeconomic Status of Neighbourhoods. _Sustainability_ 12 (15, 15): 5889.[ https://doi.org/10.3390/su12155889](https://doi.org/10.3390/su12155889). -->
 
-Ekkel, E.D., and de Vries, S. 2017. Nearby green space and human health: Evaluating accessibility metrics. _Landscape and Urban Planning_ 157: 214–220.[ https://doi.org/10.1016/j.landurbplan.2016.06.008](https://doi.org/10.1016/j.landurbplan.2016.06.008).
+<!-- Ekkel, E.D., and de Vries, S. 2017. Nearby green space and human health: Evaluating accessibility metrics. _Landscape and Urban Planning_ 157: 214–220.[ https://doi.org/10.1016/j.landurbplan.2016.06.008](https://doi.org/10.1016/j.landurbplan.2016.06.008). -->
 
-Feng, X. et al. 2020. Impact of Residential Green Space on Sleep Quality and Sufficiency in Children and Adolescents Residing in Australia and Germany. _International Journal of Environmental Research and Public Health_ 17 (13): 4894.[ https://doi.org/10.3390/ijerph17134894](https://doi.org/10.3390/ijerph17134894).
+<!-- Feng, X. et al. 2020. Impact of Residential Green Space on Sleep Quality and Sufficiency in Children and Adolescents Residing in Australia and Germany. _International Journal of Environmental Research and Public Health_ 17 (13): 4894.[ https://doi.org/10.3390/ijerph17134894](https://doi.org/10.3390/ijerph17134894). -->
 
-Feng, X., and Astell-Burt, T. 2017. Residential Green Space Quantity and Quality and Child Well-being: A Longitudinal Study. _American Journal of Preventive Medicine_ 53 (5): 616–624.[ https://doi.org/10.1016/j.amepre.2017.06.035](https://doi.org/10.1016/j.amepre.2017.06.035).
+<!-- Feng, X., and Astell-Burt, T. 2017. Residential Green Space Quantity and Quality and Child Well-being: A Longitudinal Study. _American Journal of Preventive Medicine_ 53 (5): 616–624.[ https://doi.org/10.1016/j.amepre.2017.06.035](https://doi.org/10.1016/j.amepre.2017.06.035). -->
 
-Gresenz, C.R., Sturm, R., and Tang, L. 2001. Income and Mental Health: Unraveling Community and Individual Level Relationships. _J Ment Health Policy Econ_ 7.
+<!-- Gresenz, C.R., Sturm, R., and Tang, L. 2001. Income and Mental Health: Unraveling Community and Individual Level Relationships. _J Ment Health Policy Econ_ 7. -->
 
-Houlden, V., Porto de Albuquerque, J., Weich, S., and Jarvis, S. 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. _Applied Geography_ 109: 102036.[ https://doi.org/10.1016/j.apgeog.2019.102036](https://doi.org/10.1016/j.apgeog.2019.102036).
+<!-- Houlden, V., Porto de Albuquerque, J., Weich, S., and Jarvis, S. 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. _Applied Geography_ 109: 102036.[ https://doi.org/10.1016/j.apgeog.2019.102036](https://doi.org/10.1016/j.apgeog.2019.102036). -->
 
-Jiang, W., Stickley, A., and Ueda, M. 2021. Green space and suicide mortality in Japan: An ecological study. _Social Science & Medicine_ 282: 114137.[ https://doi.org/10.1016/j.socscimed.2021.114137](https://doi.org/10.1016/j.socscimed.2021.114137).
+<!-- Jiang, W., Stickley, A., and Ueda, M. 2021. Green space and suicide mortality in Japan: An ecological study. _Social Science & Medicine_ 282: 114137.[ https://doi.org/10.1016/j.socscimed.2021.114137](https://doi.org/10.1016/j.socscimed.2021.114137). -->
 
-Johnson, B.S., Malecki, K.M., Peppard, P.E., and Beyer, K.M.M. 2018. Exposure to neighborhood green space and sleep: Evidence from the Survey of the Health of Wisconsin. _Sleep Health_ 4 (5): 413–419.[ https://doi.org/10.1016/j.sleh.2018.08.001](https://doi.org/10.1016/j.sleh.2018.08.001).
+<!-- Johnson, B.S., Malecki, K.M., Peppard, P.E., and Beyer, K.M.M. 2018. Exposure to neighborhood green space and sleep: Evidence from the Survey of the Health of Wisconsin. _Sleep Health_ 4 (5): 413–419.[ https://doi.org/10.1016/j.sleh.2018.08.001](https://doi.org/10.1016/j.sleh.2018.08.001). -->
 
-Legendre, P. 1993. Spatial Autocorrelation: Trouble or New Paradigm? _Ecology_ 74 (6): 1659–1673.[ https://doi.org/10.2307/1939924](https://doi.org/10.2307/1939924).
+<!-- Legendre, P. 1993. Spatial Autocorrelation: Trouble or New Paradigm? _Ecology_ 74 (6): 1659–1673.[ https://doi.org/10.2307/1939924](https://doi.org/10.2307/1939924). -->
 
-MAHEC n.d. _Rural Health Disparities in Western North Carolina_. Available at[ https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities](https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities) [Last accessed 10 June 2022].
+<!-- MAHEC n.d. _Rural Health Disparities in Western North Carolina_. Available at[ https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities](https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities) [Last accessed 10 June 2022]. -->
 
-Mears, M., and Brindley, P. 2019. Measuring Urban Greenspace Distribution Equity: The Importance of Appropriate Methodological Approaches. _ISPRS International Journal of Geo-Information_ 8 (6, 6): 286.[ https://doi.org/10.3390/ijgi8060286](https://doi.org/10.3390/ijgi8060286).
+<!-- Mears, M., and Brindley, P. 2019. Measuring Urban Greenspace Distribution Equity: The Importance of Appropriate Methodological Approaches. _ISPRS International Journal of Geo-Information_ 8 (6, 6): 286.[ https://doi.org/10.3390/ijgi8060286](https://doi.org/10.3390/ijgi8060286). -->
 
-Mears, M., Brindley, P., Jorgensen, A., Ersoy, E., and Maheswaran, R. 2019.[ Greenspace spatial characteristics and human health in an urban environment : An epidemiological study using landscape metrics in Sheffield, UK](https://eprints.whiterose.ac.uk/147857/). _Ecological Indicators_ 106.
+<!-- Mears, M., Brindley, P., Jorgensen, A., Ersoy, E., and Maheswaran, R. 2019.[ Greenspace spatial characteristics and human health in an urban environment : An epidemiological study using landscape metrics in Sheffield, UK](https://eprints.whiterose.ac.uk/147857/). _Ecological Indicators_ 106. -->
 
-Nutsford, D., Pearson, A., and Kingham, S. 2013. An ecological study investigating the association between access to urban green space and mental health. _Public health_ 127.[ https://doi.org/10.1016/j.puhe.2013.08.016](https://doi.org/10.1016/j.puhe.2013.08.016).
+<!-- Nutsford, D., Pearson, A., and Kingham, S. 2013. An ecological study investigating the association between access to urban green space and mental health. _Public health_ 127.[ https://doi.org/10.1016/j.puhe.2013.08.016](https://doi.org/10.1016/j.puhe.2013.08.016). -->
 
-OpenStreetMap 2022. _Export_. 2022. Available at[ https://www.openstreetmap.org/copyright](https://www.openstreetmap.org/copyright) [Last accessed 6 June 2022].
+<!-- OpenStreetMap 2022. _Export_. 2022. Available at[ https://www.openstreetmap.org/copyright](https://www.openstreetmap.org/copyright) [Last accessed 6 June 2022]. -->
 
-Padgham, M., Rudis, B., Lovelace, R., and Salmon, M. 2017. Osmdata. _The Journal of Open Source Software_ 2 (14).[ https://doi.org/10.21105/joss.00305](https://doi.org/10.21105/joss.00305).
+<!-- Padgham, M., Rudis, B., Lovelace, R., and Salmon, M. 2017. Osmdata. _The Journal of Open Source Software_ 2 (14).[ https://doi.org/10.21105/joss.00305](https://doi.org/10.21105/joss.00305). -->
 
-Public Land, T.T. for 2021. _ParkServe Data Downloads_. 2021. Available at[ https://www.tpl.org/parkserve/downloads](https://www.tpl.org/parkserve/downloads) [Last accessed 29 November 2021].
+<!-- Public Land, T.T. for 2021. _ParkServe Data Downloads_. 2021. Available at[ https://www.tpl.org/parkserve/downloads](https://www.tpl.org/parkserve/downloads) [Last accessed 29 November 2021]. -->
 
-R Core Team 2022.[ R: A language and environment for statistical computing](https://www.r-project.org/). Vienna, Austria: R Foundation for Statistical Computing.
+<!-- R Core Team 2022.[ R: A language and environment for statistical computing](https://www.r-project.org/). Vienna, Austria: R Foundation for Statistical Computing. -->
 
-Reiss, F. 2013. Socioeconomic inequalities and mental health problems in children and adolescents: A systematic review. _Social Science & Medicine_ 90: 24–31.[ https://doi.org/10.1016/j.socscimed.2013.04.026](https://doi.org/10.1016/j.socscimed.2013.04.026).
+<!-- Reiss, F. 2013. Socioeconomic inequalities and mental health problems in children and adolescents: A systematic review. _Social Science & Medicine_ 90: 24–31.[ https://doi.org/10.1016/j.socscimed.2013.04.026](https://doi.org/10.1016/j.socscimed.2013.04.026). -->
 
-Rigolon, A., Browning, M., and Jennings, V. 2018. Inequities in the quality of urban park systems: An environmental justice investigation of cities in the United States. _Landscape and Urban Planning_ 178: 156–169.[ https://doi.org/10.1016/j.landurbplan.2018.05.026](https://doi.org/10.1016/j.landurbplan.2018.05.026).
+<!-- Rigolon, A., Browning, M., and Jennings, V. 2018. Inequities in the quality of urban park systems: An environmental justice investigation of cities in the United States. _Landscape and Urban Planning_ 178: 156–169.[ https://doi.org/10.1016/j.landurbplan.2018.05.026](https://doi.org/10.1016/j.landurbplan.2018.05.026). -->
 
-RStudio Team 2022.[ RStudio: Integrated development environment for R](http://www.rstudio.com/). Boston, MA: RStudio, PBC.
+<!-- RStudio Team 2022.[ RStudio: Integrated development environment for R](http://www.rstudio.com/). Boston, MA: RStudio, PBC. -->
 
-Runkle, J.D., Matthews, J.L., Sparks, L., McNicholas, L., and Sugg, M.M. 2022. Racial and ethnic disparities in pregnancy complications and the protective role of greenspace: A retrospective birth cohort study. _Science of The Total Environment_ 808: 152145.[ https://doi.org/10.1016/j.scitotenv.2021.152145](https://doi.org/10.1016/j.scitotenv.2021.152145).
+<!-- Runkle, J.D., Matthews, J.L., Sparks, L., McNicholas, L., and Sugg, M.M. 2022. Racial and ethnic disparities in pregnancy complications and the protective role of greenspace: A retrospective birth cohort study. _Science of The Total Environment_ 808: 152145.[ https://doi.org/10.1016/j.scitotenv.2021.152145](https://doi.org/10.1016/j.scitotenv.2021.152145). -->
 
-Shin, J.C., Parab, K.V., An, R., and Grigsby-Toussaint, D.S. 2020. Greenspace exposure and sleep: A systematic review. _Environmental Research_ 182: 109081.[ https://doi.org/10.1016/j.envres.2019.109081](https://doi.org/10.1016/j.envres.2019.109081).
+<!-- Shin, J.C., Parab, K.V., An, R., and Grigsby-Toussaint, D.S. 2020. Greenspace exposure and sleep: A systematic review. _Environmental Research_ 182: 109081.[ https://doi.org/10.1016/j.envres.2019.109081](https://doi.org/10.1016/j.envres.2019.109081). -->
 
-Slawsky, E.D. et al. 2022. Neighborhood greenspace exposure as a protective factor in dementia risk among U.S. Adults 75 years or older: A cohort study. _Environmental Health_ 21 (1): 14.[ https://doi.org/10.1186/s12940-022-00830-6](https://doi.org/10.1186/s12940-022-00830-6).
+<!-- Slawsky, E.D. et al. 2022. Neighborhood greenspace exposure as a protective factor in dementia risk among U.S. Adults 75 years or older: A cohort study. _Environmental Health_ 21 (1): 14.[ https://doi.org/10.1186/s12940-022-00830-6](https://doi.org/10.1186/s12940-022-00830-6). -->
 
-USGS 2019.[ Landsat-8 Imagery](https://landsat.usgs.gov/). U.S. Geological Survey.
+<!-- USGS 2019.[ Landsat-8 Imagery](https://landsat.usgs.gov/). U.S. Geological Survey. -->
 
-van Dillen, S.M.E., de Vries, S., Groenewegen, P.P., and Spreeuwenberg, P. 2012. Greenspace in urban neighbourhoods and residents’ health: Adding quality to quantity. _Journal of Epidemiology and Community Health_ 66 (6): e8.[ https://doi.org/10.1136/jech.2009.104695](https://doi.org/10.1136/jech.2009.104695).
+<!-- van Dillen, S.M.E., de Vries, S., Groenewegen, P.P., and Spreeuwenberg, P. 2012. Greenspace in urban neighbourhoods and residents’ health: Adding quality to quantity. _Journal of Epidemiology and Community Health_ 66 (6): e8.[ https://doi.org/10.1136/jech.2009.104695](https://doi.org/10.1136/jech.2009.104695). -->
 
-Wang, R., Feng, Z., Pearce, J., Liu, Y., and Dong, G. 2021. Are greenspace quantity and quality associated with mental health through different mechanisms in Guangzhou, China: A comparison study using street view data. _Environmental Pollution_ 290: 117976.[ https://doi.org/10.1016/j.envpol.2021.117976](https://doi.org/10.1016/j.envpol.2021.117976).
+<!-- Wang, R., Feng, Z., Pearce, J., Liu, Y., and Dong, G. 2021. Are greenspace quantity and quality associated with mental health through different mechanisms in Guangzhou, China: A comparison study using street view data. _Environmental Pollution_ 290: 117976.[ https://doi.org/10.1016/j.envpol.2021.117976](https://doi.org/10.1016/j.envpol.2021.117976). -->
 
-Wheeler, B.W. et al. 2015. Beyond greenspace: An ecological study of population general health and indicators of natural environment type and quality. _International Journal of Health Geographics_ 14 (1): 17.[ https://doi.org/10.1186/s12942-015-0009-5](https://doi.org/10.1186/s12942-015-0009-5).
+<!-- Wheeler, B.W. et al. 2015. Beyond greenspace: An ecological study of population general health and indicators of natural environment type and quality. _International Journal of Health Geographics_ 14 (1): 17.[ https://doi.org/10.1186/s12942-015-0009-5](https://doi.org/10.1186/s12942-015-0009-5). -->
 
-Wood, E. et al. 2018. Not All Green Space Is Created Equal: Biodiversity Predicts Psychological Restorative Benefits From Urban Green Space. _Frontiers in Psychology_ 9.[ https://doi.org/10.3389/fpsyg.2018.02320](https://doi.org/10.3389/fpsyg.2018.02320).
+<!-- Wood, E. et al. 2018. Not All Green Space Is Created Equal: Biodiversity Predicts Psychological Restorative Benefits From Urban Green Space. _Frontiers in Psychology_ 9.[ https://doi.org/10.3389/fpsyg.2018.02320](https://doi.org/10.3389/fpsyg.2018.02320). -->
 
-Wood, L., Hooper, P., Foster, S., and Bull, F. 2017. Public green spaces and positive mental health - investigating the relationship between access, quantity and types of parks and mental wellbeing. _Health & Place_ 48: 63–71.[ https://doi.org/10.1016/j.healthplace.2017.09.002](https://doi.org/10.1016/j.healthplace.2017.09.002).
+<!-- Wood, L., Hooper, P., Foster, S., and Bull, F. 2017. Public green spaces and positive mental health - investigating the relationship between access, quantity and types of parks and mental wellbeing. _Health & Place_ 48: 63–71.[ https://doi.org/10.1016/j.healthplace.2017.09.002](https://doi.org/10.1016/j.healthplace.2017.09.002). -->
 
-Xie, Y. et al. 2020. Association between residential greenness and sleep quality in Chinese rural population. _Environment International_ 145: 106100.[ https://doi.org/10.1016/j.envint.2020.106100](https://doi.org/10.1016/j.envint.2020.106100).
+<!-- Xie, Y. et al. 2020. Association between residential greenness and sleep quality in Chinese rural population. _Environment International_ 145: 106100.[ https://doi.org/10.1016/j.envint.2020.106100](https://doi.org/10.1016/j.envint.2020.106100). -->
 
-Zhang, Y., Van den Berg, A.E., Van Dijk, T., and Weitkamp, G. 2017. Quality over Quantity: Contribution of Urban Green Space to Neighborhood Satisfaction. _International Journal of Environmental Research and Public Health_ 14 (5): 535.[ https://doi.org/10.3390/ijerph14050535](https://doi.org/10.3390/ijerph14050535).
+<!-- Zhang, Y., Van den Berg, A.E., Van Dijk, T., and Weitkamp, G. 2017. Quality over Quantity: Contribution of Urban Green Space to Neighborhood Satisfaction. _International Journal of Environmental Research and Public Health_ 14 (5): 535.[ https://doi.org/10.3390/ijerph14050535](https://doi.org/10.3390/ijerph14050535). -->
