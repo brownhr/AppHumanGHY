@@ -273,13 +273,13 @@ LISA analysis identified spatially explicit locations of mental health, greenspa
 
 # DISCUSSION
 
-The greenspace mental health relationship varied with health outcomes in Western North Carolina. Contrary to prior research in more urban areas (e.g., Houlden et al., 2019; Wang et al., 2021), this analysis did not find greenspace quantity to have a significant protective effect on any of the mental health outcomes. Greenspace quality was associated with reduced counts of poor reported sleep. While not statistically significant, LISA cluster analysis illustrated that mental health outcomes clustered together spatially, suggesting additional contextual predictors, such as race and income, may influence mental health outcomes in this region. 
+The greenspace mental health relationship varied with health outcomes in Western North Carolina. Contrary to prior research in more urban areas [@houlden2019; @wang2021], this analysis did not find greenspace quantity to have a significant protective effect on any of the mental health outcomes. Greenspace quality was associated with reduced counts of poor reported sleep. While not statistically significant, LISA cluster analysis illustrated that mental health outcomes clustered together spatially, suggesting additional contextual predictors, such as race and income, may influence mental health outcomes in this region. 
 
-Greenspace quality, specifically when measured as greenspace amenities, did have a small protective effect on poor sleep. Poor sleep is a precursor for additional poor mental health outcomes (Freeman et al., 2017; Baglioni et al., 2016). As such, mental health outcomes not included in this analysis may also be related to greenspace quality metrics in Western North Carolina. However, greenspace quantity was significantly associated with increased reports of poor sleep. Research on the greenspace-sleep relationship is still evolving, with most studies finding neighborhood greenspace benefits sleep (Shin et al., 2020; Johnson et al., 2018; Xie et al., 2020). However, other studies have found there is no positive relationship between greenspace and sleep (Feng et al., 2020; Chum et al., 2015). Additionally, the type of greenspace, specifically tree canopy compared to grassland, may influence the greenspace-sleep relationship (Astell-Burt and Feng, 2020), in conjunction with sociodemographic factors (Xie et al., 2020). Additional sociodemographic factors not considered in this analysis (e.g. employment, education) may influence the greenspace-sleep relationship. This analysis suggests the greenspace-sleep relationship is complex and may vary depending on the setting. 
+Greenspace quality, specifically when measured as greenspace amenities, did have a small protective effect on poor sleep. Poor sleep is a precursor for additional poor mental health outcomes [@freeman2017; @baglioni2016]. As such, mental health outcomes not included in this analysis may also be related to greenspace quality metrics in Western North Carolina. However, greenspace quantity was significantly associated with increased reports of poor sleep. Research on the greenspace-sleep relationship is still evolving, with most studies finding neighborhood greenspace benefits sleep [@shin2020; @johnson2018; @xie2020]. However, other studies have found there is no positive relationship between greenspace and sleep [@feng2020; @chum2015]. Additionally, the type of greenspace, specifically tree canopy compared to grassland, may influence the greenspace-sleep relationship [@astell-burt2020], in conjunction with sociodemographic factors [@xie2020]. Additional sociodemographic factors not considered in this analysis (e.g. employment, education) may influence the greenspace-sleep relationship. This analysis suggests the greenspace-sleep relationship is complex and may vary depending on the setting. 
 
-Greenspace did not have significant protective effects for depression diagnoses or reported poor mental health. This finding contrasts a growing body of literature linking greenspace to better mental health outcomes (Beyer et al., 2014; Feng & Astell-Burt, 2017; Houlden et al., 2019; Wheeler et al., 2015; Zhang et al., 2017). As with poor sleep, there may be additional contextual factors, including rurality and sociodemographic characteristics, that are moderating this relationship. 
+Greenspace did not have significant protective effects for depression diagnoses or reported poor mental health. This finding contrasts a growing body of literature linking greenspace to better mental health outcomes [@beyer2014; @feng2017; @houlden2019; @wheeler2015; @zhang2017]. As with poor sleep, there may be additional contextual factors, including rurality and sociodemographic characteristics, that are moderating this relationship. 
 
-Across all health outcomes considered, demographic and socioeconomic factors were found to be better predictors of all mental health outcomes. For both poor mental health and sleep, race (percent White) was significantly associated with reductions in health outcomes. These results suggest that ZIP Codes with higher percentages of White individuals have fewer individuals reporting poor mental health and poor sleep. Income was significantly associated with reductions in poor mental health, poor sleep, and depression diagnoses. This result suggests that ZIP Codes with greater percentages of high-income households have fewer reported poor mental health outcomes, poor sleep, and depression diagnoses. These findings support literature that demographic and socioeconomic variables are driving influences of reported and diagnosed mental health outcomes (Gresenz et al., 2001; Reiss, 2013; Howell and McFeeters, 2008).
+Across all health outcomes considered, demographic and socioeconomic factors were found to be better predictors of all mental health outcomes. For both poor mental health and sleep, race (percent White) was significantly associated with reductions in health outcomes. These results suggest that ZIP Codes with higher percentages of White individuals have fewer individuals reporting poor mental health and poor sleep. Income was significantly associated with reductions in poor mental health, poor sleep, and depression diagnoses. This result suggests that ZIP Codes with greater percentages of high-income households have fewer reported poor mental health outcomes, poor sleep, and depression diagnoses. These findings support literature that demographic and socioeconomic variables are driving influences of reported and diagnosed mental health outcomes [@gresenz2001; @reiss2013; @howell2008].
 
 
 ## Implications
@@ -301,80 +301,3 @@ This study considered the greenspace mental health relationship in Western North
 
 # REFERENCES
 
-<!-- Alcock, I. et al. 2015. What accounts for ‘England’s green and pleasant land’? A panel data analysis of mental health and land cover types in rural England. _Landscape and Urban Planning_ 142: 38–46.[ https://doi.org/10.1016/j.landurbplan.2015.05.008](https://doi.org/10.1016/j.landurbplan.2015.05.008). -->
-
-<!-- Astell-Burt, T., and Feng, X. 2020. Does sleep grow on trees? A longitudinal study to investigate potential prevention of insufficient sleep with different types of urban green space. _SSM - Population Health_ 10: 100497.[ https://doi.org/10.1016/j.ssmph.2019.100497](https://doi.org/10.1016/j.ssmph.2019.100497). -->
-
-<!-- Beyer, K.M. et al. 2014. Exposure to neighborhood green space and mental health: Evidence from the survey of the health of Wisconsin. _International journal of environmental research and public health_ 11 (3): 3453–3472.[ https://doi.org/10.3390/ijerph110303453](https://doi.org/10.3390/ijerph110303453). -->
-
-<!-- Browning, M.H.E.M., and Rigolon, A. 2018. Do Income, Race and Ethnicity, and Sprawl Influence the Greenspace-Human Health Link in City-Level Analyses? Findings from 496 Cities in the United States. _International Journal of Environmental Research and Public Health_ 15 (7): E1541.[ https://doi.org/10.3390/ijerph15071541](https://doi.org/10.3390/ijerph15071541). -->
-
-<!-- Bureau, U.S.C. 2018. 2014-2018 American Community Survey 5-Year Demographic Estimates. -->
-
-<!-- CDC 2022. _PLACES: Local Data for Better Health_. 2022. Available at[ https://www.cdc.gov/places/index.html](https://www.cdc.gov/places/index.html) [Last accessed 6 June 2022]. -->
-
-<!-- Chum, A., O’Campo, P., and Matheson, F. 2015. The impact of urban land uses on sleep duration and sleep problems. _The Canadian Geographer / Le Géographe canadien_ 59 (4): 404–418.[ https://doi.org/10.1111/cag.12202](https://doi.org/10.1111/cag.12202). -->
-
-<!-- Collins, R. et al. 2020. _A systematic map of research exploring the effect of greenspace on mental health_. 11 May 2020. Available at[ https://eprints.soton.ac.uk/440876/](https://eprints.soton.ac.uk/440876/) [Last accessed 24 September 2021]. -->
-
-<!-- de Vries, S., Buijs, A.E., and Snep, R.P.H. 2020. Environmental Justice in The Netherlands: Presence and Quality of Greenspace Differ by Socioeconomic Status of Neighbourhoods. _Sustainability_ 12 (15, 15): 5889.[ https://doi.org/10.3390/su12155889](https://doi.org/10.3390/su12155889). -->
-
-<!-- Ekkel, E.D., and de Vries, S. 2017. Nearby green space and human health: Evaluating accessibility metrics. _Landscape and Urban Planning_ 157: 214–220.[ https://doi.org/10.1016/j.landurbplan.2016.06.008](https://doi.org/10.1016/j.landurbplan.2016.06.008). -->
-
-<!-- Feng, X. et al. 2020. Impact of Residential Green Space on Sleep Quality and Sufficiency in Children and Adolescents Residing in Australia and Germany. _International Journal of Environmental Research and Public Health_ 17 (13): 4894.[ https://doi.org/10.3390/ijerph17134894](https://doi.org/10.3390/ijerph17134894). -->
-
-<!-- Feng, X., and Astell-Burt, T. 2017. Residential Green Space Quantity and Quality and Child Well-being: A Longitudinal Study. _American Journal of Preventive Medicine_ 53 (5): 616–624.[ https://doi.org/10.1016/j.amepre.2017.06.035](https://doi.org/10.1016/j.amepre.2017.06.035). -->
-
-<!-- Gresenz, C.R., Sturm, R., and Tang, L. 2001. Income and Mental Health: Unraveling Community and Individual Level Relationships. _J Ment Health Policy Econ_ 7. -->
-
-<!-- Houlden, V., Porto de Albuquerque, J., Weich, S., and Jarvis, S. 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. _Applied Geography_ 109: 102036.[ https://doi.org/10.1016/j.apgeog.2019.102036](https://doi.org/10.1016/j.apgeog.2019.102036). -->
-
-<!-- Jiang, W., Stickley, A., and Ueda, M. 2021. Green space and suicide mortality in Japan: An ecological study. _Social Science & Medicine_ 282: 114137.[ https://doi.org/10.1016/j.socscimed.2021.114137](https://doi.org/10.1016/j.socscimed.2021.114137). -->
-
-<!-- Johnson, B.S., Malecki, K.M., Peppard, P.E., and Beyer, K.M.M. 2018. Exposure to neighborhood green space and sleep: Evidence from the Survey of the Health of Wisconsin. _Sleep Health_ 4 (5): 413–419.[ https://doi.org/10.1016/j.sleh.2018.08.001](https://doi.org/10.1016/j.sleh.2018.08.001). -->
-
-<!-- Legendre, P. 1993. Spatial Autocorrelation: Trouble or New Paradigm? _Ecology_ 74 (6): 1659–1673.[ https://doi.org/10.2307/1939924](https://doi.org/10.2307/1939924). -->
-
-<!-- MAHEC n.d. _Rural Health Disparities in Western North Carolina_. Available at[ https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities](https://mahec.net/innovation-and-research/research/rural-health-initiative/wnc-health-disparities) [Last accessed 10 June 2022]. -->
-
-<!-- Mears, M., and Brindley, P. 2019. Measuring Urban Greenspace Distribution Equity: The Importance of Appropriate Methodological Approaches. _ISPRS International Journal of Geo-Information_ 8 (6, 6): 286.[ https://doi.org/10.3390/ijgi8060286](https://doi.org/10.3390/ijgi8060286). -->
-
-<!-- Mears, M., Brindley, P., Jorgensen, A., Ersoy, E., and Maheswaran, R. 2019.[ Greenspace spatial characteristics and human health in an urban environment : An epidemiological study using landscape metrics in Sheffield, UK](https://eprints.whiterose.ac.uk/147857/). _Ecological Indicators_ 106. -->
-
-<!-- Nutsford, D., Pearson, A., and Kingham, S. 2013. An ecological study investigating the association between access to urban green space and mental health. _Public health_ 127.[ https://doi.org/10.1016/j.puhe.2013.08.016](https://doi.org/10.1016/j.puhe.2013.08.016). -->
-
-<!-- OpenStreetMap 2022. _Export_. 2022. Available at[ https://www.openstreetmap.org/copyright](https://www.openstreetmap.org/copyright) [Last accessed 6 June 2022]. -->
-
-<!-- Padgham, M., Rudis, B., Lovelace, R., and Salmon, M. 2017. Osmdata. _The Journal of Open Source Software_ 2 (14).[ https://doi.org/10.21105/joss.00305](https://doi.org/10.21105/joss.00305). -->
-
-<!-- Public Land, T.T. for 2021. _ParkServe Data Downloads_. 2021. Available at[ https://www.tpl.org/parkserve/downloads](https://www.tpl.org/parkserve/downloads) [Last accessed 29 November 2021]. -->
-
-<!-- R Core Team 2022.[ R: A language and environment for statistical computing](https://www.r-project.org/). Vienna, Austria: R Foundation for Statistical Computing. -->
-
-<!-- Reiss, F. 2013. Socioeconomic inequalities and mental health problems in children and adolescents: A systematic review. _Social Science & Medicine_ 90: 24–31.[ https://doi.org/10.1016/j.socscimed.2013.04.026](https://doi.org/10.1016/j.socscimed.2013.04.026). -->
-
-<!-- Rigolon, A., Browning, M., and Jennings, V. 2018. Inequities in the quality of urban park systems: An environmental justice investigation of cities in the United States. _Landscape and Urban Planning_ 178: 156–169.[ https://doi.org/10.1016/j.landurbplan.2018.05.026](https://doi.org/10.1016/j.landurbplan.2018.05.026). -->
-
-<!-- RStudio Team 2022.[ RStudio: Integrated development environment for R](http://www.rstudio.com/). Boston, MA: RStudio, PBC. -->
-
-<!-- Runkle, J.D., Matthews, J.L., Sparks, L., McNicholas, L., and Sugg, M.M. 2022. Racial and ethnic disparities in pregnancy complications and the protective role of greenspace: A retrospective birth cohort study. _Science of The Total Environment_ 808: 152145.[ https://doi.org/10.1016/j.scitotenv.2021.152145](https://doi.org/10.1016/j.scitotenv.2021.152145). -->
-
-<!-- Shin, J.C., Parab, K.V., An, R., and Grigsby-Toussaint, D.S. 2020. Greenspace exposure and sleep: A systematic review. _Environmental Research_ 182: 109081.[ https://doi.org/10.1016/j.envres.2019.109081](https://doi.org/10.1016/j.envres.2019.109081). -->
-
-<!-- Slawsky, E.D. et al. 2022. Neighborhood greenspace exposure as a protective factor in dementia risk among U.S. Adults 75 years or older: A cohort study. _Environmental Health_ 21 (1): 14.[ https://doi.org/10.1186/s12940-022-00830-6](https://doi.org/10.1186/s12940-022-00830-6). -->
-
-<!-- USGS 2019.[ Landsat-8 Imagery](https://landsat.usgs.gov/). U.S. Geological Survey. -->
-
-<!-- van Dillen, S.M.E., de Vries, S., Groenewegen, P.P., and Spreeuwenberg, P. 2012. Greenspace in urban neighbourhoods and residents’ health: Adding quality to quantity. _Journal of Epidemiology and Community Health_ 66 (6): e8.[ https://doi.org/10.1136/jech.2009.104695](https://doi.org/10.1136/jech.2009.104695). -->
-
-<!-- Wang, R., Feng, Z., Pearce, J., Liu, Y., and Dong, G. 2021. Are greenspace quantity and quality associated with mental health through different mechanisms in Guangzhou, China: A comparison study using street view data. _Environmental Pollution_ 290: 117976.[ https://doi.org/10.1016/j.envpol.2021.117976](https://doi.org/10.1016/j.envpol.2021.117976). -->
-
-<!-- Wheeler, B.W. et al. 2015. Beyond greenspace: An ecological study of population general health and indicators of natural environment type and quality. _International Journal of Health Geographics_ 14 (1): 17.[ https://doi.org/10.1186/s12942-015-0009-5](https://doi.org/10.1186/s12942-015-0009-5). -->
-
-<!-- Wood, E. et al. 2018. Not All Green Space Is Created Equal: Biodiversity Predicts Psychological Restorative Benefits From Urban Green Space. _Frontiers in Psychology_ 9.[ https://doi.org/10.3389/fpsyg.2018.02320](https://doi.org/10.3389/fpsyg.2018.02320). -->
-
-<!-- Wood, L., Hooper, P., Foster, S., and Bull, F. 2017. Public green spaces and positive mental health - investigating the relationship between access, quantity and types of parks and mental wellbeing. _Health & Place_ 48: 63–71.[ https://doi.org/10.1016/j.healthplace.2017.09.002](https://doi.org/10.1016/j.healthplace.2017.09.002). -->
-
-<!-- Xie, Y. et al. 2020. Association between residential greenness and sleep quality in Chinese rural population. _Environment International_ 145: 106100.[ https://doi.org/10.1016/j.envint.2020.106100](https://doi.org/10.1016/j.envint.2020.106100). -->
-
-<!-- Zhang, Y., Van den Berg, A.E., Van Dijk, T., and Weitkamp, G. 2017. Quality over Quantity: Contribution of Urban Green Space to Neighborhood Satisfaction. _International Journal of Environmental Research and Public Health_ 14 (5): 535.[ https://doi.org/10.3390/ijerph14050535](https://doi.org/10.3390/ijerph14050535). -->
