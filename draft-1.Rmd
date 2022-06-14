@@ -91,7 +91,7 @@ Western North Carolina is a predominantly rural, mountainous region. Mental heal
 Several geographical, environmental, and administrative definitions of Western North Carolina (WNC) are defined across the literature; in this study, Western North Carolina is defined as communities enclosed in the North Carolina Blue Ridge Mountains, encompassing 160 total ZIP codes within 23 counties (Figure \@ref(fig:extent)). ZIP codes are used as the defining administrative level due to the availability of publicly-accessible mental health and demographic data, e.g., the PLACES dataset, which had substantial missing data at the census tract scale for this region. WNC is predominantly rural and mountainous, with pockets of urbanization, most notably Asheville, NC. Greenspace varies from public parks to expansive National Forest land (Figure \@ref(fig:gs-extent)).
 
 
-```{r extent, fig.width = 4.5, fig.cap = "Extent of ZIP codes (dark gray) within Western NC (light gray)"}
+```{r extent, fig.width = 4.5, fig.height=1.72, fig.id = "extent", fig.cap = "Extent of ZIP codes (dark gray) within Western NC (light gray)"}
 knitr::include_graphics("fig/brownExtent.png")
 ```
 
@@ -101,8 +101,8 @@ knitr::include_graphics("fig/brownExtent.png")
 
 
 
-```{r gs-extent, fig.width = 4.5, fig.cap = "Extent of combined PAD-US and ParkServe greenspace areas (dark gray)"}
-knitr::include_graphics("fig/brownGSExtent.png", dpi = 600)
+```{r gs-extent, fig.width = 4.5, fig.height=2.26, fig.id = "gs-extent", fig.cap = "Extent of combined PAD-US and ParkServe greenspace areas (dark gray)"}
+knitr::include_graphics("fig/brownGSExtent.png")
 ```
 
 
@@ -135,14 +135,16 @@ Additional demographic predictor variables include population, race, and househo
 
 All variables were tested for spatial autocorrelation; Moran’s I was used to assess spatial autocorrelation at a significance level of $p < 0.05$. *P*-values at or below 0.05 and an Moran’s I-statistic of $I \neq 0$ indicate spatial autocorrelation and spatial dependence, pointing to the need to perform spatial regression (Anselin, 2009; Legendre, 1993). The spatial weights matrix $W_{ij}$ was defined using the queen’s case rule. All variables except population, income and greenspace amenities were found to be spatially autocorrelated (Table \@ref(tab:moran-table)). Variables were tested for multicollinearity, no variables were above the threshold of 5 (Table \@ref(tab:vif)) (Craney & Surles, 2002). 
 
-```{r moran-table}
+```{r moran-table, tab.id = "moran-table", tab.cap = "Calculated statistics for Moran’s I across predictor and response variables"}
 moran <- read_rds("data/moran.Rds") %>%
-  mutate(across(.fns = as.character))
+  mutate(across(.cols = -1, .fns = function(x){signif(x, 3) %>% as.character()})) %>% 
+`colnames<-`(c("Variable", "Moran's I", "Expected", "Variance", "SD", "p value"))
+  
 
-knitr::kable(moran,
-             format = "latex",
-             col.names = c("Variable", "Moran's I", "Expected", "Variance", "SD", "p value"),
-             caption = "Calculated statistics for Moran’s I across predictor and response variables")
+moran
+# knitr::kable(moran,
+#              format = "latex",
+#              col.names = c("Variable", "Moran's I", "Expected", "Variance", "SD", "p value"))
 
 ```
 
@@ -150,10 +152,22 @@ knitr::kable(moran,
 
 <!-- _Table 1: Calculated statistics for Moran’s I across predictor and response variables._ -->
 
-```{r vif}
+```{r vif, tab.id = "vif", tab.cap = "Variance Inflation Factors for variables"}
 basic_list <- read_rds("data/basic_list.Rds")
-basic_list %>% map_dfr(regclass::VIF) %>% t() %>% `row.names<-`(c("Mean NDVI", "Greenspace Area", "Percent White", "Income", "Amenities", "Trails")) %>% `colnames<-`(c("MHLTH", "DEPRESSION", "SLEEP")) %>% 
-  knitr::kable(digits = 4, caption = "Variance Inflation Factors for variables")
+bl <-
+  basic_list %>% map_dfr(regclass::VIF) %>% t() %>% `row.names<-`(c(
+    "Mean NDVI",
+    "Greenspace Area",
+    "Percent White",
+    "Income",
+    "Amenities",
+    "Trails"
+  )) %>% 
+  `colnames<-`(c("MHLTH", "DEPRESSION", "SLEEP")) %>% 
+  as.data.frame() %>% 
+  tibble::rownames_to_column("Variable") %>% 
+  mutate(across(2:4, .fns = signif, digits = 4))
+bl
 
 ```
 
@@ -166,9 +180,18 @@ The Lagrange multiplier diagnostics for spatial dependence test was conducted, w
 <!-- _Table 2: Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis._ -->
 
 
-```{r, lagrange}
-l$p.value <- as.character(signif(l$p.value))
-knitr::kable(l, caption = "Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis")
+```{r, lagrange, tab.id = "lagrange", tab.cap = "Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis"}
+# l$p.value <- as.character(signif(l$p.value))
+l2 <- l[1:4, -3] %>%
+  mutate(across(2:3, signif, digits = 4)) %>%
+  mutate(Method = c("Spatial Error (SE)",
+                    "Spatial Lag (SL)",
+                    "Robust SE",
+                    "Robust SL")) %>% 
+  `colnames<-`(c("Method", "Lagrange Multiplier", "p-value"))
+
+l2
+
 ```
 
 
@@ -182,7 +205,7 @@ Given that the data were spatially autocorrelated, Local Indicators of Spatial A
 
 
 
-```{r lisa, fig.width=4.5, fig.cap = "Results from LISA highlighting general trend from hot (high-high) to cold(low-low) clustering of each variable. Note that not all locations have a p-value < 0.05 and that this figure is meant as a visual aid"}
+```{r lisa, fig.width=4.5, fig.id = "lisa", fig.cap = "Results from LISA highlighting general trend from hot (high-high) to cold(low-low) clustering of each variable. Note that not all locations have a p-value < 0.05 and that this figure is meant as a visual aid"}
 knitr::include_graphics("fig/brownLISA.png")
 ```
 
@@ -196,15 +219,15 @@ knitr::include_graphics("fig/brownLISA.png")
 
 ## General Mental Health
 
-Spatial regression analysis found that none of the greenspace metrics were associated with reductions in reported poor mental health (Table \@ref(tab:sarlm-table)). Percent of the ZIP Code that is White ($\beta = -4.476, p >0.001$) and percent of households in the ZIP Code making over \$125,000 ($\beta = -4.638, p > 0.001$) were significantly associated with reductions in mental health outcomes (Table \@ref(tab:sarlm-table)).
+Spatial regression analysis found that none of the greenspace metrics were associated with reductions in reported poor mental health (Table \@ref(tab:sarlm)). Percent of the ZIP Code that is White ($\beta = -4.476, p >0.001$) and percent of households in the ZIP Code making over \$125,000 ($\beta = -4.638, p > 0.001$) were significantly associated with reductions in mental health outcomes (Table \@ref(tab:sarlm)).
 
 
-```{r sarlm-table}
+```{r tab.id = "sarlm", tab.cap = "Spatial lag regression coefficients for each mental health outcome"}
 model_list %>%
   map(function(x) {
     extract.Sarlm2(x)
   }) %>%
-  texreg::texreg(
+  texreg::matrixreg(
     single.row = T,
     booktabs = T,
     dcolumn = T,
@@ -220,8 +243,11 @@ model_list %>%
       "rho"
       
     ),
-    float.pos = "h", caption = "Spatial lag regression coefficients for each mental health outcome"
-  )
+    float.pos = "h"
+  ) %>% 
+  as_tibble() %>% 
+  `colnames<-`(.[1, ]) %>% 
+  .[-1, ]
 ```
 
 
@@ -231,12 +257,12 @@ model_list %>%
 
 ## Depression
 
-Greenspace metrics are not significantly associated with depression (Table \@ref(tab:sarlm-table)). Percent of the ZIP Code that is White was also not associated with changes in depression diagnoses. Percent of households making over \$125,000 per year was significantly associated with reductions in depression diagnoses ($\beta = -2.924, p = 0.004$) (Table \@ref(tab:sarlm-table)).
+Greenspace metrics are not significantly associated with depression (Table \@ref(tab:sarlm)). Percent of the ZIP Code that is White was also not associated with changes in depression diagnoses. Percent of households making over \$125,000 per year was significantly associated with reductions in depression diagnoses ($\beta = -2.924, p = 0.004$) (Table \@ref(tab:sarlm)).
 
 
 ## Poor Sleep
 
-Spatial regression found poor sleep to be significantly associated with greenspace metrics (Table \@ref(tab:sarlm-table)). Greenspace quantity ($\beta = 0.743, p = 0.026$) was significantly associated with an increase in reported poor sleep, while greenspace amenities ($\beta = -0.015, p < 0.001$) were significant;y associated with a decrease in reported poor sleep. Percent White ($\beta = -6.980, p < 0.001$) and percent of households making over \$125,000 ($\beta = -5.707, p > 0.001$) were both significantly associated with reductions in reported poor sleep outcomes (Table \@ref(tab:sarlm-table)). 
+Spatial regression found poor sleep to be significantly associated with greenspace metrics (Table \@ref(tab:sarlm)). Greenspace quantity ($\beta = 0.743, p = 0.026$) was significantly associated with an increase in reported poor sleep, while greenspace amenities ($\beta = -0.015, p < 0.001$) were significant;y associated with a decrease in reported poor sleep. Percent White ($\beta = -6.980, p < 0.001$) and percent of households making over \$125,000 ($\beta = -5.707, p > 0.001$) were both significantly associated with reductions in reported poor sleep outcomes (Table \@ref(tab:sarlm)). 
 
 ## Local Indicators of Spatial Autocorrelation (LISA)
 
