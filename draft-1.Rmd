@@ -84,7 +84,7 @@ Western North Carolina is a predominantly rural, mountainous region. Mental heal
 
 ## Study Area
 
-Several geographical, environmental, and administrative definitions of Western North Carolina (WNC) are defined across the literature; in this study, Western North Carolina is defined as communities enclosed in the North Carolina Blue Ridge Mountains, encompassing 160 total ZIP codes within 23 counties ***(Figure 1)***. ZIP codes are used as the defining administrative level due to the availability of publicly-accessible mental health and demographic data, e.g., the PLACES dataset, which had substantial missing data at the census tract scale for this region. WNC is predominantly rural and mountainous, with pockets of urbanization, most notably Asheville, NC. Greenspace varies from public parks to expansive National Forest land ***(Figure 2)***.
+Several geographical, environmental, and administrative definitions of Western North Carolina (WNC) are defined across the literature; in this study, Western North Carolina is defined as communities enclosed in the North Carolina Blue Ridge Mountains, encompassing 160 total ZIP codes within 23 counties (Figure \@ref(fig:extent)). ZIP codes are used as the defining administrative level due to the availability of publicly-accessible mental health and demographic data, e.g., the PLACES dataset, which had substantial missing data at the census tract scale for this region. WNC is predominantly rural and mountainous, with pockets of urbanization, most notably Asheville, NC. Greenspace varies from public parks to expansive National Forest land (Figure \@ref(fig:gs-extent)).
 
 
 ```{r extent, fig.width = 4.5, fig.cap = "Extent of ZIP codes (dark gray) within Western NC (light gray)"}
@@ -113,7 +113,7 @@ For this analysis, three mental health outcomes were considered: (1) general men
 
 ## Greenspace Quantity
 
-This study identifies greenspace as areas encompassed by the Trust for Public Land’s ParkServe (ParkServe) dataset and The Protected Area Database of the United States (PAD-US) dataset from 2020 (Runkle et al., 2022; Slawsky et al., 2022; TPL 2020; USGS 2020). ParkServe is a dataset comprising all public parks, including local and city parks and playgrounds (TPL 2020). PAD-US is a spatial dataset of all government-managed greenspaces, such as national forest land, national parks, and historical areas (USGS 2020). All parks and public greenspaces selected from these two datasets were combined to form one public greenspace dataset ***(Figure 2)***. For consistency with the PLACES mental health datasets at the ZIP Code level, greenspace area was calculated as the percentage of an area within each ZIP code covered by greenspace (defined by the ParkServe and PAD-US datasets); redundant or overlapping greenspaces (i.e., the same greenspace within both datasets) were removed by performing a spatial union of the two datasets, such that overlapping greenspaces do not overestimate greenspace area.
+This study identifies greenspace as areas encompassed by the Trust for Public Land’s ParkServe (ParkServe) dataset and The Protected Area Database of the United States (PAD-US) dataset from 2020 (Runkle et al., 2022; Slawsky et al., 2022; TPL 2020; USGS 2020). ParkServe is a dataset comprising all public parks, including local and city parks and playgrounds (TPL 2020). PAD-US is a spatial dataset of all government-managed greenspaces, such as national forest land, national parks, and historical areas (USGS 2020). All parks and public greenspaces selected from these two datasets were combined to form one public greenspace dataset (Figure \@ref(fig:gs-extent)). For consistency with the PLACES mental health datasets at the ZIP Code level, greenspace area was calculated as the percentage of an area within each ZIP code covered by greenspace (defined by the ParkServe and PAD-US datasets); redundant or overlapping greenspaces (i.e., the same greenspace within both datasets) were removed by performing a spatial union of the two datasets, such that overlapping greenspaces do not overestimate greenspace area.
 
 
 ## Greenspace Quality
@@ -124,12 +124,12 @@ Greenspace amenities data from ParkServe, specifically trail accessibility, and 
 
 ## Covariates
 
-Additional demographic predictor variables include population, race, and household income. Previous research has illustrated that race (Browning & Rigolon, 2018) and income (Hoffiman et al., 2017; deVries et al., 2020) influence the greenspace mental health relationship, as predominantly white, upper-class neighborhoods tend to have the greatest access to greenspaces (Rigolon et al., 2018). Race was accounted for by including the percentage of White residents, and income was accounted for by including the percentage of households with annual income over $125,000/year. Race and Income variables are from 2018 ACS 5-year estimates (U.S. Census Bureau, 2018).
+Additional demographic predictor variables include population, race, and household income. Previous research has illustrated that race (Browning & Rigolon, 2018) and income (Hoffiman et al., 2017; deVries et al., 2020) influence the greenspace mental health relationship, as predominantly white, upper-class neighborhoods tend to have the greatest access to greenspaces (Rigolon et al., 2018). Race was accounted for by including the percentage of White residents, and income was accounted for by including the percentage of households with annual income over \$125,000/year. Race and Income variables are from 2018 ACS 5-year estimates (U.S. Census Bureau, 2018).
 
 
 ## Regression Analysis
 
-All variables were tested for spatial autocorrelation; Moran’s I was used to assess spatial autocorrelation at a significance level of $p < 0.05$. *P*-values at or below 0.05 and an Moran’s I-statistic of $I \neq 0$ indicate spatial autocorrelation and spatial dependence, pointing to the need to perform spatial regression (Anselin, 2009; Legendre, 1993). The spatial weights matrix $W_{ij}$ was defined using the queen’s case rule. All variables except population, income and greenspace amenities were found to be spatially autocorrelated (Table 1). Variables were tested for multicollinearity, no variables were above the threshold of 5 (Table 2) (Craney & Surles, 2002). 
+All variables were tested for spatial autocorrelation; Moran’s I was used to assess spatial autocorrelation at a significance level of $p < 0.05$. *P*-values at or below 0.05 and an Moran’s I-statistic of $I \neq 0$ indicate spatial autocorrelation and spatial dependence, pointing to the need to perform spatial regression (Anselin, 2009; Legendre, 1993). The spatial weights matrix $W_{ij}$ was defined using the queen’s case rule. All variables except population, income and greenspace amenities were found to be spatially autocorrelated (Table \@ref(tab:moran-table)). Variables were tested for multicollinearity, no variables were above the threshold of 5 (Table \@ref(tab:vif)) (Craney & Surles, 2002). 
 
 ```{r moran-table}
 moran <- read_rds("data/moran.Rds") %>%
@@ -157,7 +157,7 @@ basic_list %>% map_dfr(regclass::VIF) %>% t() %>% `row.names<-`(c("Mean NDVI", "
 
 <!-- _Table a: Variance Inflation Factors for variables. _ -->
 
-The Lagrange multiplier diagnostics for spatial dependence test was conducted, which illustrates the spatial regression model (spatial error, spatial lag, and robust versions) that performs best for the spatially autocorrelated variables. The spatial regression with the lowest _p_-value and highest statistic was selected. For this analysis, the spatial lag model was the most significant model (Table 2).
+The Lagrange multiplier diagnostics for spatial dependence test was conducted, which illustrates the spatial regression model (spatial error, spatial lag, and robust versions) that performs best for the spatially autocorrelated variables. The spatial regression with the lowest _p_-value and highest statistic was selected. For this analysis, the spatial lag model was the most significant model (Table \@ref(tab:lagrange)).
 
 <!-- _Table 2: Results from Robust Lagrange Multiplier Test. Spatial lag regression was used in this analysis._ -->
 
@@ -169,12 +169,12 @@ knitr::kable(l, caption = "Results from Robust Lagrange Multiplier Test. Spatial
 
 
 
-All regression analysis considered greenspace metrics (quantity, NDVI, trail density, and amenities) in addition to percent of the ZIP Code that is White and percent of households in each ZIP Code that makes over $125,000 per year. All regression analyses were performed in RStudio version 2022.2.3.492 with R version 4.2.0 (2022-04-22 ucrt) (RStudio Team, 2022; R Core Team, 2022). 
+All regression analysis considered greenspace metrics (quantity, NDVI, trail density, and amenities) in addition to percent of the ZIP Code that is White and percent of households in each ZIP Code that makes over \$125,000 per year. All regression analyses were performed in RStudio version 2022.2.3.492 with R version 4.2.0 (2022-04-22 ucrt) (RStudio Team, 2022; R Core Team, 2022). 
 
 
 ## Local Indicators of Spatial Autocorrelation (LISA)
 
-Given that the data were spatially autocorrelated, Local Indicators of Spatial Autocorrelation (LISA) were used to identify and visualize spatially explicit clustering of health outcomes, greenspace metrics and demographic and socioeconomic variables ***(Figure 3)***. LISA clustering was not significant across variables. However, the results highlight trends of spatially explicit clustering. High-high clustering illustrates locations with high rates of the variable of interest that are surrounded by other locations with high rates of the variable, high-low corresponds to high rates surrounded by low rates, low-low illustrates low rates surrounded by low rates and low-high signals low rates surrounded by high rates.
+Given that the data were spatially autocorrelated, Local Indicators of Spatial Autocorrelation (LISA) were used to identify and visualize spatially explicit clustering of health outcomes, greenspace metrics and demographic and socioeconomic variables (Figure \@ref(fig:lisa)). LISA clustering was not significant across variables. However, the results highlight trends of spatially explicit clustering. High-high clustering illustrates locations with high rates of the variable of interest that are surrounded by other locations with high rates of the variable, high-low corresponds to high rates surrounded by low rates, low-low illustrates low rates surrounded by low rates and low-high signals low rates surrounded by high rates.
 
 
 
@@ -184,7 +184,7 @@ knitr::include_graphics("fig/brownLISA.png")
 
 
 
-Figure 3: Results from LISA analysis highlighting hot (high-high) and cold (low-low) clustering of each variable
+<!-- Figure 3: Results from LISA analysis highlighting hot (high-high) and cold (low-low) clustering of each variable -->
 
 
 # RESULTS
@@ -192,7 +192,7 @@ Figure 3: Results from LISA analysis highlighting hot (high-high) and cold (low-
 
 ## General Mental Health
 
-Spatial regression analysis found that none of the greenspace metrics were associated with reductions in reported poor mental health (Table 3).** **Percent of the ZIP Code that is White (𝛽 = -4.476, _p_ &lt;0.001) and percent of households in the ZIP Code making over $125,000 (𝛽 = -4.638, _p_ &lt;0.001) were significantly associated with reductions in mental health outcomes (Table 3).
+Spatial regression analysis found that none of the greenspace metrics were associated with reductions in reported poor mental health (Table \@ref(tab:sarlm-table)). Percent of the ZIP Code that is White ($\beta = -4.476, p >0.001$) and percent of households in the ZIP Code making over \$125,000 ($\beta = -4.638, p > 0.001$) were significantly associated with reductions in mental health outcomes (Table \@ref(tab:sarlm-table)).
 
 
 ```{r sarlm-table}
@@ -227,16 +227,16 @@ model_list %>%
 
 ## Depression
 
-Greenspace metrics are not significantly associated with depression (Table 3). Percent of the ZIP Code that is White was also not associated with changes in depression diagnoses. Percent of households making over $125,000 per year was significantly associated with reductions in depression diagnoses (𝛽 = -2.924, _p_:0.004) (Table 3).
+Greenspace metrics are not significantly associated with depression (Table \@ref(tab:sarlm-table)). Percent of the ZIP Code that is White was also not associated with changes in depression diagnoses. Percent of households making over \$125,000 per year was significantly associated with reductions in depression diagnoses ($\beta = -2.924, p = 0.004$) (Table \@ref(tab:sarlm-table)).
 
 
 ## Poor Sleep
 
-Spatial regression found poor sleep to be significantly associated with greenspace metrics (Table 3). Greenspace quantity (𝛽 = 0.743, _p_:0.026) was significantly associated with an increase in reported poor sleep, while greenspace amenities (𝛽 = -0.015, _p_&lt;0.001) were significant;y associated with a decrease in reported poor sleep. Percent White (𝛽 = -6.980, _p_&lt;0.001) and percent of households making over $125,000 (𝛽 = -5.707, _p_&lt;0.001) were both significantly associated with reductions in reported poor sleep outcomes (Table 3). 
+Spatial regression found poor sleep to be significantly associated with greenspace metrics (Table \@ref(tab:sarlm-table)). Greenspace quantity ($\beta = 0.743, p = 0.026$) was significantly associated with an increase in reported poor sleep, while greenspace amenities ($\beta = -0.015, p < 0.001$) were significant;y associated with a decrease in reported poor sleep. Percent White ($\beta = -6.980, p < 0.001$) and percent of households making over \$125,000 ($\beta = -5.707, p > 0.001$) were both significantly associated with reductions in reported poor sleep outcomes (Table \@ref(tab:sarlm-table)). 
 
 ## Local Indicators of Spatial Autocorrelation (LISA)
 
-LISA analysis identified spatially explicit locations of mental health, greenspace and sociodemographic clustering ***(Figure 3)***. All mental health outcomes illustrate similar clustering patterns, with high-high clustering found in the northern, eastern, and southwestern parts of the region. Low-low mental health clustering for all outcomes occurred in the central and southern part of the region. Greenspace clustering varied depending on the metric, with high-high trail length clustering in the southern part of the region, while greenspace quantity clustered in the southwest and northern parts of the region. NDVI clustered along the western edge of the region, and amenities, which clustered throughout the region. Race and income metrics (percent White and percent households with annual income over $125,000) have high-high clustering dispersed throughout the region ***(Figure 3)***.
+LISA analysis identified spatially explicit locations of mental health, greenspace and sociodemographic clustering (Figure \@ref(fig:lisa)). All mental health outcomes illustrate similar clustering patterns, with high-high clustering found in the northern, eastern, and southwestern parts of the region. Low-low mental health clustering for all outcomes occurred in the central and southern part of the region. Greenspace clustering varied depending on the metric, with high-high trail length clustering in the southern part of the region, while greenspace quantity clustered in the southwest and northern parts of the region. NDVI clustered along the western edge of the region, and amenities, which clustered throughout the region. Race and income metrics (percent White and percent households with annual income over \$125,000) have high-high clustering dispersed throughout the region (Figure \@ref(fig:lisa)).
 
 
 # DISCUSSION
