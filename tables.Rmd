@@ -1,12 +1,15 @@
 ---
-output: bookdown::pdf_document2
-header-includes:
-  \usepackage{booktabs}
-  \usepackage{dcolumn}  
+output: bookdown::word_document2
+# header-includes:
+#   \usepackage{booktabs}
+#   \usepackage{dcolumn}  
 ---
 
 ```{r setup, include = FALSE}
 l <- readRDS("data/lagrange.Rds")
+library(tidyverse)
+library(spatialreg)
+source("R/extract.R")
 model_list <- readr::read_rds("model_list.Rds")
 ```
 
@@ -17,22 +20,38 @@ knitr::kable(l)
 
 RENAME RHO IN MODEL
 ```{r echo = FALSE, eval=T}
-texreg::texreg(
-  model_list,
+# extract_list <-
+#   purrr::map(
+#     model_list,
+#     function(x){
+#       e <- texreg::extract(x)
+#       e@coef.names[length(e@coef.names)] <- "rho"
+#       return(e)
+#     }
+#   )
+model_list %>% 
+  map(
+    function(x){
+      extract.Sarlm2(x)
+    }
+  ) %>% 
+texreg::wordreg(
+  file = "texreg.docx",
   single.row = T,
   booktabs = T,
   dcolumn = T, custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
-  custom.coef.map = list(
-    "(Intercept)" = NA,
-    "$\\rho\\\\$" = "\\\\$\\rho\\\\$",
-    "NDVI_MEAN" = "Mean NDVI",
-    "greenspace_n" = "Greenspace Area",
-    "pct_white" = "Percent White",
-    "pct_125k" = "Income",
-    "amens_per" = "Amenities",
-    "trail_per_area" = "Trails"
-
-  ),float.pos = "h"
+#   custom.coef.names = c(
+# NA,
+# 
+# "Mean NDVI",
+# "Greenspace Area",
+# "Percent White",
+# "Income",
+# "Amenities",
+# "Trails"
+# 
+#   ), 
+float.pos = "h"
 )
 
 ```
