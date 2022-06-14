@@ -74,7 +74,7 @@ nc_border <- states %>%
               outer.margins = c(0, 0, 0, 0))
 } %>%
   tmap_save(
-    filename = "fig/zcta_overview.png",
+    filename = "fig/brownExtent.png",
     width = 4.5, units = "in", dpi = 600
   )
 
