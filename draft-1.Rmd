@@ -11,9 +11,22 @@ csl: seg.csl
 
 
 output:
-  bookdown::word_document2:
+  officedown::rdocx_document:
     number_sections: false
     reference_docx: template.docx
+    tables:
+      style: stat_table
+    plots:
+      align: center
+    page_size:
+      width: 8.5
+      heigh: 11
+    page_margins:
+      bottom: 1
+      top: 1
+      right: 1
+      left: 1
+      
 lot: true
 lof: true
 toc: false
@@ -44,6 +57,7 @@ knitr::opts_chunk$set(
 )
 
 l <- readRDS("data/lagrange.Rds")
+library(officedown)
 library(tidyverse)
 library(texreg)
 library(spatialreg)
@@ -56,7 +70,7 @@ model_list <- readr::read_rds("model_list.Rds")
 
 # INTRODUCTION
 
-Proximity to greenspace is a potential determinant on an individual’s mental health [@nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021]. As a low-cost mental health intervention, greenspace provides restorative experiences, encourages social cohesion, reduces pollution, and offers opportunities for physical activity [@lachowecyz2013; @wang2021]. To date, most greenspace research has focused on the greenspace mental health relationship in urban areas, with less attention focused on rural communities [@collins2020]. Within studies that have considered the greenspace mental health relationship in rural areas, evidence is mixed, with some studies finding greenspace benefits mental health similarly in rural areas as compared to urban areas [@verheji2008; @alcock2015]. Other research suggests that the rural greenspace mental health relationship differs from the urban relationship [@jiang2021], with private greenspaces — including yards, agricultural fields, and general “countryside greenness” — playing an important role in the rural greenspace mental health relationship [@ekkel2017]. As such, further investigation into the rural greenspace mental health relationship is needed, specifically with regards to public greenspace quality, in addition to greenspace quantity — i.e., available area within a greenspace.
+Proximity to greenspace is a potential determinant on an individual’s mental health [@nutsford2013; @ekkel2017; @collins2020; @sakar2018; @jiang2021]. As a low-cost mental health intervention, greenspace provides restorative experiences, encourages social cohesion, reduces pollution, and offers opportunities for physical activity [@lachowycz2013; @wang2021]. To date, most greenspace research has focused on the greenspace mental health relationship in urban areas, with less attention focused on rural communities [@collins2020]. Within studies that have considered the greenspace mental health relationship in rural areas, evidence is mixed, with some studies finding greenspace benefits mental health similarly in rural areas as compared to urban areas [@verheji2008; @alcock2015]. Other research suggests that the rural greenspace mental health relationship differs from the urban relationship [@jiang2021], with private greenspaces — including yards, agricultural fields, and general “countryside greenness” — playing an important role in the rural greenspace mental health relationship [@ekkel2017]. As such, further investigation into the rural greenspace mental health relationship is needed, specifically with regards to public greenspace quality, in addition to greenspace quantity — i.e., available area within a greenspace.
 
 Most greenspace studies consider greenspace quantity as the primary metric, with less attention given to greenspace quality (Collins et al., 2020). Past research has found that an increased quantity of greenspace tends to correspond with better mental health outcomes (van Dillen et al., 2012; Wood et al., 2017; Wang et al., 2021). However, more research is needed to determine whether greenspace quality — attributes including nearby amenities, “greenness” metrics like NDVI, or the presence of public hiking or biking trails — are significant predictors of mental health outcomes. 
 
@@ -74,7 +88,7 @@ Several geographical, environmental, and administrative definitions of Western N
 
 
 ```{r extent, fig.width = 4.5, fig.cap = "Extent of ZIP codes (dark gray) within Western NC (light gray)"}
-knitr::include_graphics("fig/brownExtent.png", dpi = 600)
+knitr::include_graphics("fig/brownExtent.png")
 ```
 
 
@@ -122,6 +136,7 @@ moran <- read_rds("data/moran.Rds") %>%
   mutate(across(.fns = as.character))
 
 knitr::kable(moran,
+             format = "latex",
              col.names = c("Variable", "Moran's I", "Expected", "Variance", "SD", "p value"),
              caption = "Calculated statistics for Moran’s I across predictor and response variables")
 
