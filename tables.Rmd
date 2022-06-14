@@ -13,7 +13,7 @@ source("R/extract.R")
 model_list <- readr::read_rds("model_list.Rds")
 ```
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = FALSE}
 l$p.value <- as.character(signif(l$p.value))
 knitr::kable(l)
 ```
@@ -35,22 +35,23 @@ model_list %>%
       extract.Sarlm2(x)
     }
   ) %>% 
-texreg::wordreg(
-  file = "texreg.docx",
+texreg::knitreg(
+  # file = "texreg.docx",
   single.row = T,
   booktabs = T,
   dcolumn = T, custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
-#   custom.coef.names = c(
-# NA,
-# 
-# "Mean NDVI",
-# "Greenspace Area",
-# "Percent White",
-# "Income",
-# "Amenities",
-# "Trails"
-# 
-#   ), 
+  custom.coef.names = c(
+NA,
+
+"Mean NDVI",
+"Greenspace Area",
+"Percent White",
+"Income",
+"Amenities",
+"Trails",
+"rho"
+
+  ),
 float.pos = "h"
 )
 
