@@ -246,9 +246,10 @@ sarlm_tab <- model_list %>%
     float.pos = "h"
   ) %>% 
   as.data.frame() %>% 
-  as_tibble() %>% 
+  tibble::as_tibble() %>% 
   `colnames<-`(.[1, ]) %>% 
-  .[-1, ]
+  .[-1, ] %>% 
+  `colnames<-`(c("Variable", "MHLTH", "DEPRESSION", "SLEEP"))
 sarlm_tab
 ```
 
@@ -291,7 +292,7 @@ This analysis illustrates the complexity of the greenspace-mental health relatio
 
 This article is strengthened by the greenspace metrics considered and the datasets utilized. This analysis considered multiple metrics of greenspace, allowing for deeper analysis into the greenspace mental health relationship. The inclusion of greenspace quality metrics strengthens this analysis as it illustrates the complexity of the greenspace mental health relationship. An additional strength of this analysis is that all data used is publically available, allowing for replicability.
 
-	Several limitations to this study exist; this analysis was conducted regionally and therefore the results may not be directly applicable outside of the study area. Additional research is needed at larger scales and across wider geographic regions to better understand the greenspace mental health relationship in rural, mountainous regions. The use of publicly-sourced data (OpenStreetMap) may also lead to observation biases in urban areas — amenities in rural areas are less likely to be reported and present within OSM datasets. In general, this paper highlights the need for a consistent and unified system for categorizing and qualifying public greenspaces in terms of their quality. Additionally, datasets were collected at different time points, therefore temporal mismatch may occur. 
+Several limitations to this study exist; this analysis was conducted regionally and therefore the results may not be directly applicable outside of the study area. Additional research is needed at larger scales and across wider geographic regions to better understand the greenspace mental health relationship in rural, mountainous regions. The use of publicly-sourced data (OpenStreetMap) may also lead to observation biases in urban areas — amenities in rural areas are less likely to be reported and present within OSM datasets. In general, this paper highlights the need for a consistent and unified system for categorizing and qualifying public greenspaces in terms of their quality. Additionally, datasets were collected at different time points, therefore temporal mismatch may occur. 
 
 
 # CONCLUSIONS
