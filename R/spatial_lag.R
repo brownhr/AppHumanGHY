@@ -79,3 +79,5 @@ sleep_lag <- lagsarlm(
 model_list <- list(mhealth_lag,
                    depress_lag,
                    sleep_lag)
+
+write_rds(model_list, "model_list.Rds")

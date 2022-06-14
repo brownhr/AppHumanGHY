@@ -1,14 +1,73 @@
 ---
-output: bookdown::word_document2
-
+output: bookdown::pdf_document2
+header-includes:
+  \usepackage{booktabs}
+  \usepackage{dcolumn}  
 ---
 
 ```{r setup, include = FALSE}
 l <- readRDS("data/lagrange.Rds")
+model_list <- readr::read_rds("model_list.Rds")
 ```
 
 ```{r echo = FALSE}
 l$p.value <- as.character(signif(l$p.value))
 knitr::kable(l)
 ```
+
+RENAME RHO IN MODEL
+```{r echo = FALSE, eval=T}
+texreg::texreg(
+  model_list,
+  single.row = T,
+  booktabs = T,
+  dcolumn = T, custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
+  custom.coef.map = list(
+    "(Intercept)" = NA,
+    "$\\rho\\\\$" = "\\\\$\\rho\\\\$",
+    "NDVI_MEAN" = "Mean NDVI",
+    "greenspace_n" = "Greenspace Area",
+    "pct_white" = "Percent White",
+    "pct_125k" = "Income",
+    "amens_per" = "Amenities",
+    "trail_per_area" = "Trails"
+
+  ),float.pos = "h"
+)
+
+```
+
+
+
+
+
+<!-- \begin{table} -->
+<!-- \begin{center} -->
+<!-- \begin{tabular}{l D{)}{)}{9)3} D{)}{)}{9)3} D{)}{)}{9)3}} -->
+<!-- \toprule -->
+<!--  & \multicolumn{1}{c}{MHLTH} & \multicolumn{1}{c}{DEPRESSION} & \multicolumn{1}{c}{SLEEP} \\ -->
+<!-- \midrule -->
+<!-- (Intercept)         & 10.15 \; (1.73)^{***} & 9.58 \; (2.12)^{***} & 14.45 \; (2.19)^{***} \\ -->
+<!-- $\rho$              & 0.59 \; (0.08)^{***}  & 0.62 \; (0.08)^{***} & 0.78 \; (0.05)^{***}  \\ -->
+<!-- Mean NDVI           & 0.87 \; (2.53)        & 1.69 \; (2.21)       & -1.38 \; (2.60)       \\ -->
+<!-- Greenspace Area     & 0.29 \; (0.32)        & 0.21 \; (0.28)       & 0.74 \; (0.33)^{*}    \\ -->
+<!-- Percent White       & -4.48 \; (1.11)^{***} & -0.57 \; (0.97)      & -6.98 \; (1.15)^{***} \\ -->
+<!-- Income              & -4.64 \; (1.16)^{***} & -2.92 \; (1.01)^{**} & -5.71 \; (1.19)^{***} \\ -->
+<!-- Amenities           & -0.00 \; (0.01)       & -0.00 \; (0.01)      & -0.02 \; (0.01)^{*}   \\ -->
+<!-- Trails              & -0.18 \; (0.56)       & -0.26 \; (0.49)      & -0.28 \; (0.58)       \\ -->
+<!-- \midrule -->
+<!-- Num. obs.           & 151                   & 151                  & 151                   \\ -->
+<!-- Parameters          & 9                     & 9                    & 9                     \\ -->
+<!-- Log Likelihood      & -263.91               & -244.48              & -274.50               \\ -->
+<!-- AIC (Linear model)  & 584.95                & 550.63               & 670.83                \\ -->
+<!-- AIC (Spatial model) & 545.82                & 506.96               & 567.00                \\ -->
+<!-- LR test: statistic  & 41.13                 & 45.67                & 105.82                \\ -->
+<!-- LR test: p-value    & 0.00                  & 0.00                 & 0.00                  \\ -->
+<!-- \bottomrule -->
+<!-- \multicolumn{4}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}} -->
+<!-- \end{tabular} -->
+<!-- \caption{Statistical models} -->
+<!-- \label{table:coefficients} -->
+<!-- \end{center} -->
+<!-- \end{table} -->
 

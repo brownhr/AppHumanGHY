@@ -28,7 +28,7 @@ list(mhealth_lag, depress_lag, sleep_lag) %>%
   
 
 
-model_list <- list(mhealth_lag, depress_lag, sleep_lag)
+model_list <- readr::read_rds("model_list.Rds")
 # 
 # model_summary <- model_list %>% 
 #   map(
@@ -67,4 +67,24 @@ forestreg <- texreg::plotreg(model_list,
                 type = "forest") %>% 
   ggsave(filename = "fig/forest_reg.png",
          width = 7, units = "in", dpi = 600)
+
+
+# regression_table <- 
+  texreg::texreg(
+  model_list,
+  single.row = T,
+  booktabs = T,
+  dcolumn = T, custom.model.names = c("MHLTH", "DEPRESSION", "SLEEP"),
+  custom.coef.map = list(
+    "(Intercept)" = NA,
+    "$\\rho$" = "$\\rho$",
+    "NDVI_MEAN" = "Mean NDVI",
+    "greenspace_n" = "Greenspace Area",
+    "pct_white" = "Percent White",
+    "pct_125k" = "Income",
+    "amens_per" = "Amenities",
+    "trail_per_area" = "Trails"
+
+  )
+)
 
